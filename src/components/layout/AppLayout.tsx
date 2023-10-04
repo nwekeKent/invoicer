@@ -6,7 +6,10 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<main className={styles.app__layout}>
 			<SideMenu />
-			<main className={styles.app__mainbody}>{children}</main>
+			<main className={styles.app__mainbody}>
+				{" "}
+				<div className={styles.mainbody__container}>{children}</div>{" "}
+			</main>
 		</main>
 	);
 };

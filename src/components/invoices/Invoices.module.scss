@@ -1,0 +1,11 @@
+.invoices__header {
+	@include flex(space-between, center, row nowrap);
+
+	&__left {
+	}
+
+	&__right {
+		@include flex(space-between, center, row nowrap);
+		gap: 23px;
+	}
+}

@@ -1,0 +1,107 @@
+%button {
+	padding: 0 24px;
+	height: 48px;
+	flex-shrink: 0;
+	outline: 0px;
+	border: 0px;
+	border-radius: 24px;
+	font-family: "League Spartan";
+	font-size: 15px;
+	font-weight: 700;
+	transition: 0.5s ease;
+	line-height: 15px;
+	@include flex(center, center, row);
+}
+
+.button__primary {
+	@extend %button;
+	background-color: $col-purple;
+	color: $col-white;
+
+	&:hover {
+		background-color: $col-purple-lte;
+	}
+}
+
+.button__delete {
+	@extend %button;
+	background-color: $col-red;
+	color: $col-white;
+
+	&:hover {
+		background-color: $col-red-lte;
+	}
+}
+
+.button__edit {
+	@extend %button;
+	background-color: #f9fafe;
+	color: $col-faded-purple;
+
+	&:hover {
+		background-color: $col-ultra-faded-purple;
+	}
+}
+
+[data-theme="dark"] .button__edit {
+	background-color: $col-navy-blue-lte;
+	color: $col-ultra-faded-purple;
+
+	&:hover {
+		color: $col-ultra-faded-purple;
+		background-color: $col-white;
+	}
+}
+
+.button__secondary {
+	@extend %button;
+	background-color: $col-grey-dark;
+	color: $col-grey;
+
+	&:hover {
+		background-color: $col-black;
+	}
+}
+
+[data-theme="dark"] .button__secondary {
+	background-color: $col-grey-dark;
+	color: $col-ultra-faded-purple;
+
+	&:hover {
+		color: $col-ultra-faded-purple;
+		background-color: $col-navy-blue;
+	}
+}
+
+.button__addNew {
+	width: 150px;
+	height: 48px;
+	flex-shrink: 0;
+	outline: 0px;
+	border: 0px;
+	border-radius: 24px;
+	font-family: "League Spartan";
+	font-size: 15px;
+	font-weight: 700;
+	transition: 0.5s ease;
+	line-height: 15px;
+	@include flex(flex-start, center, row);
+	gap: 16px;
+	padding-left: 8px;
+}
+
+.button__addNewItem {
+	width: 100%;
+	height: 48px;
+	flex-shrink: 0;
+	outline: 0px;
+	border: 0px;
+	border-radius: 24px;
+	font-family: "League Spartan";
+	font-size: 15px;
+	font-weight: 700;
+	transition: 0.5s ease;
+	line-height: 15px;
+	@include flex(center, center, row);
+	gap: 16px;
+}

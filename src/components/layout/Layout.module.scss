@@ -16,7 +16,7 @@
 	width: 103px;
 	height: 100%;
 	border-radius: 0px 20px 20px 0px;
-	transition: all 0.5s ease;
+	transition: background 0.5s ease;
 	@include flex(space-between, flex-start, column nowrap);
 
 	@include respondMax("tablet") {
@@ -62,4 +62,25 @@
 
 [data-theme="dark"] .app__sidebar {
 	background-color: $col-navy-blue;
+}
+
+.app__mainbody {
+	width: calc(100vw - 103px);
+	height: 100vh;
+	padding: 78px 48px;
+
+	@include respondMax("tablet") {
+		width: 100%;
+		padding: 62px 48px;
+	}
+
+	@include respondMax("mobile") {
+		width: 100%;
+		padding: 36px 24px;
+	}
+}
+
+.mainbody__container {
+	max-width: 730px;
+	margin: 0 auto;
 }
