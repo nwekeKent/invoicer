@@ -1,0 +1,63 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
+.app__layout {
+	width: 100%;
+	height: 100%;
+	@include flex(flex-start, flex-start, row nowrap);
+
+	@include respondMax("tablet") {
+		@include flex(flex-start, flex-start, column nowrap);
+	}
+}
+
+.app__sidebar {
+	background: $col-grey-dark;
+	width: 103px;
+	height: 100%;
+	border-radius: 0px 20px 20px 0px;
+	@include flex(space-between, flex-start, column nowrap);
+
+	@include respondMax("tablet") {
+		width: 100%;
+		height: 80px;
+		border-radius: 0px;
+		@include flex(space-between, flex-start, row nowrap);
+
+		img {
+			height: 80px;
+			width: 80px;
+			object-fit: contain;
+		}
+	}
+
+	&_actions {
+		gap: 30px;
+		width: 100%;
+
+		@include flex(center, center, column nowrap);
+
+		@include respondMax("tablet") {
+			@include flex(space-between, center, row nowrap);
+			height: 80px;
+			width: auto;
+		}
+
+		.sidebar__avatar {
+			height: 88px;
+			width: 100%;
+			border-top: 1px solid #494e6e;
+
+			@include respondMax("tablet") {
+				height: 100%;
+				width: 88px;
+				border-top: 0;
+				border-left: 1px solid #494e6e;
+			}
+		}
+	}
+}
+
+[data-theme="dark"] .app__sidebar {
+	background-color: $col-navy-blue;
+}

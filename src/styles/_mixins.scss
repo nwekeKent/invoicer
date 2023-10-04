@@ -1,0 +1,55 @@
+// flexbox
+@mixin flex($justify: flex-start, $align: flex-start, $flow: row wrap) {
+	flex-flow: $flow;
+	display: flex;
+	justify-content: $justify;
+	align-items: $align;
+}
+
+// breakpoints
+$breakpoints: (
+	"mobile": 550px,
+	"sm-mobile": 650px,
+	"tablet": 768px,
+	"lg-tablet": 920px,
+	"sm-desktop": 1300px,
+	"desktop": 1440px,
+) !default;
+
+@mixin add-margin($margin-type, $margin-size) {
+	@if $margin-type == "margin" {
+		margin: $margin-size;
+	} @else if $margin-type == "margin-top" {
+		margin-top: $margin-size;
+	} @else if $margin-type == "margin-right" {
+		margin-right: $margin-size;
+	} @else if $margin-type == "margin-bottom" {
+		margin-bottom: $margin-size;
+	} @else if $margin-type == "margin-left" {
+		margin-left: $margin-size;
+	} @else {
+		@error "Invalid margin type. Use 'margin', 'margin-top', 'margin-right', 'margin-bottom', or 'margin-left'.";
+	}
+}
+
+@mixin respondMin($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media (min-width: map-get($breakpoints, $breakpoint)) {
+			@content;
+		}
+	} @else {
+		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+      + "Available breakpoints are: #{map-keys($breakpoints)}.";
+	}
+}
+
+@mixin respondMax($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media (max-width: map-get($breakpoints, $breakpoint)) {
+			@content;
+		}
+	} @else {
+		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+      + "Available breakpoints are: #{map-keys($breakpoints)}.";
+	}
+}
