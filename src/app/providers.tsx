@@ -8,7 +8,9 @@ type ProvidersProps = {
 };
 
 const Providers = ({ children }: ProvidersProps) => (
-	<ThemeProvider enableSystem={true}>{children}</ThemeProvider>
+	<ThemeProvider enableSystem={false} enableColorScheme={false}>
+		{children}
+	</ThemeProvider>
 );
 
 export default Providers;

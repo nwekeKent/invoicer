@@ -1,11 +1,76 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
 .invoices__header {
 	@include flex(space-between, center, row nowrap);
+	position: relative;
 
 	&__left {
+		h3 {
+			font-size: 3.6rem;
+			color: $col-black;
+			font-weight: 700;
+		}
+
+		small {
+			font-size: 1.3rem;
+			font-weight: 500;
+			line-height: 1.5rem;
+			color: $col-grey;
+		}
+	}
+
+	[data-theme="dark"] &__left {
+		h3 {
+			color: $col-white;
+		}
+
+		small {
+			color: $col-white;
+		}
 	}
 
 	&__right {
 		@include flex(space-between, center, row nowrap);
 		gap: 23px;
 	}
+}
+
+.invoices__filter {
+	width: auto;
+	cursor: pointer;
+	position: relative;
+
+	.filter__text {
+		font-size: 1.5rem;
+		transition: color 0.5s linear;
+		color: $col-black;
+		font-weight: 700;
+		line-height: 15px;
+		span {
+			margin-left: 14px;
+		}
+	}
+}
+
+[data-theme="dark"] .invoices__filter {
+	.filter__text {
+		color: $col-white;
+	}
+}
+
+.filter__div {
+	position: absolute;
+	bottom: -150px;
+	left: -40px;
+	width: 192px;
+	height: 128px;
+	flex-shrink: 0;
+	border-radius: 8px;
+	background: $col-white;
+	box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .filter__div {
+	background: $col-navy-blue-lte;
 }

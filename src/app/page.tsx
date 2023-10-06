@@ -1,3 +1,10 @@
+import Invoices from "@/components/invoices/Invoices";
+import React from "react";
+
 export default function Home() {
-	return <main></main>;
+	return (
+		<React.Fragment>
+			<Invoices />
+		</React.Fragment>
+	);
 }

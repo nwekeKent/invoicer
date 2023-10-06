@@ -8,7 +8,7 @@
 	font-family: "League Spartan";
 	font-size: 15px;
 	font-weight: 700;
-	transition: 0.5s ease;
+	transition: background-color 0.5s ease, color 0.5s ease;
 	line-height: 15px;
 	@include flex(center, center, row);
 }
@@ -73,24 +73,25 @@
 	}
 }
 
-.button__addNew {
-	width: 150px;
+.button__add-new {
 	height: 48px;
 	flex-shrink: 0;
 	outline: 0px;
 	border: 0px;
+	background: $col-purple;
+	color: $col-white;
 	border-radius: 24px;
 	font-family: "League Spartan";
 	font-size: 15px;
 	font-weight: 700;
-	transition: 0.5s ease;
 	line-height: 15px;
 	@include flex(flex-start, center, row);
 	gap: 16px;
 	padding-left: 8px;
+	padding-right: 17px;
 }
 
-.button__addNewItem {
+.button__add-new-item {
 	width: 100%;
 	height: 48px;
 	flex-shrink: 0;
