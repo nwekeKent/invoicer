@@ -3,3 +3,18 @@
 * {
 	font-family: $font-default;
 }
+
+.small-para-grey {
+	font-size: 1.3rem;
+	font-weight: 500;
+	line-height: 1.5rem;
+	color: $col-grey;
+
+	span {
+		font-weight: 700;
+	}
+}
+
+[data-theme="dark"] .small-para-grey {
+	color: $col-white;
+}

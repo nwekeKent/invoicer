@@ -11,7 +11,7 @@ const InvoicesHeader = () => {
 		<header className={styles.invoices__header}>
 			<div className={styles.invoices__header__left}>
 				<h3>Invoices</h3>
-				<small>There are 7 total invoices</small>
+				<small className="small-para-grey">There are 7 total invoices</small>
 			</div>
 			<div className={styles.invoices__header__right}>
 				<InvoiceFilter />

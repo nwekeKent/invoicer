@@ -68,6 +68,7 @@
 	width: calc(100vw - 103px);
 	height: 100vh;
 	padding: 78px 48px;
+	overflow-y: scroll;
 
 	@include respondMax("tablet") {
 		width: 100%;
@@ -83,4 +84,5 @@
 .mainbody__container {
 	max-width: 730px;
 	margin: 0 auto;
+	height: 100%;
 }
