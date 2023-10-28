@@ -5,7 +5,8 @@
 	outline: 0px;
 	border: 0px;
 	border-radius: 24px;
-	font-family: "League Spartan";
+	cursor: pointer;
+	font-family: "Young serif", serif;
 	font-size: 15px;
 	font-weight: 700;
 	transition: background-color 0.5s ease, color 0.5s ease;
@@ -81,13 +82,14 @@
 	background: $col-purple;
 	color: $col-white;
 	border-radius: 24px;
-	font-family: "League Spartan";
+	// font-family: "League Spartan";
 	font-size: 15px;
 	font-weight: 700;
 	line-height: 15px;
 	@include flex(flex-start, center, row);
 	gap: 16px;
 	padding-left: 8px;
+	cursor: pointer;
 	padding-right: 17px;
 }
 
@@ -98,7 +100,8 @@
 	outline: 0px;
 	border: 0px;
 	border-radius: 24px;
-	font-family: "League Spartan";
+	// font-family: "League Spartan";
+	cursor: pointer;
 	font-size: 15px;
 	font-weight: 700;
 	transition: 0.5s ease;

@@ -32,17 +32,31 @@
 
 .invoices__filter {
 	width: auto;
-	cursor: pointer;
 	position: relative;
 
 	.filter__text {
 		font-size: 1.5rem;
 		transition: color 0.5s linear;
 		color: $col-black;
+		cursor: pointer;
 		font-weight: 700;
 		line-height: 15px;
+
 		span {
 			margin-left: 14px;
+			transform: rotate(0);
+			transition: transform 0.3s ease;
+
+			&:active {
+				span {
+					transform: rotate("180deg");
+				}
+			}
+		}
+
+		.image__rotate {
+			transform: rotate(180deg);
+			transition: transform 0.3s ease; /* Add a transition for smooth rotation */
 		}
 	}
 }
@@ -56,9 +70,12 @@
 .filter__div {
 	position: absolute;
 	bottom: -150px;
+	padding: 24px;
 	left: -40px;
+	@include flex(flex-start, flex-start, column);
+	gap: 16px;
 	width: 192px;
-	height: 128px;
+	height: 131px;
 	flex-shrink: 0;
 	border-radius: 8px;
 	background: $col-white;

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import styles from "../Invoices.module.scss";
 import Image from "next/image";
+import Checkbox from "@/app/shared/Checkbox";
 
 const InvoiceFilter = () => {
 	const [filterActive, setFilterActive] = useState(false);
@@ -21,11 +22,18 @@ const InvoiceFilter = () => {
 						width={10}
 						height={7}
 						alt="plus-svg"
+						className={filterActive ? styles.image__rotate : ""}
 					/>
 				</span>
 			</div>
 
-			{filterActive && <div className={styles.filter__div}></div>}
+			{filterActive && (
+				<div className={styles.filter__div}>
+					<Checkbox label="Draft" />
+					<Checkbox label="Pending" />
+					<Checkbox label="Paid" />
+				</div>
+			)}
 		</div>
 	);
 };

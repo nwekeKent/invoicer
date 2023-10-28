@@ -5,6 +5,7 @@ import styles from "./Invoices.module.scss";
 import SVG from "react-inlinesvg";
 import Image from "next/image";
 import InvoiceFilter from "./components/InvoiceFilter";
+import Checkbox from "@/app/shared/Checkbox";
 
 const InvoicesHeader = () => {
 	return (
