@@ -21,9 +21,17 @@ const ThemeSwitch = () => {
 		mounted && (
 			<React.Fragment>
 				{theme === "dark" ? (
-					<SVG src={"/assets/svg/sun.svg"} onClick={() => setTheme("light")} />
+					<SVG
+						src={"/assets/svg/sun.svg"}
+						className="cursor"
+						onClick={() => setTheme("light")}
+					/>
 				) : (
-					<SVG src={"/assets/svg/moon.svg"} onClick={() => setTheme("dark")} />
+					<SVG
+						src={"/assets/svg/moon.svg"}
+						className="cursor"
+						onClick={() => setTheme("dark")}
+					/>
 				)}
 			</React.Fragment>
 		)
