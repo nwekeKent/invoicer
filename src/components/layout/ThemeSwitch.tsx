@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import SVG from "react-inlinesvg";
+import Image from "next/image";
 
 const ThemeSwitch = () => {
 	const [mounted, setMounted] = useState(false);
@@ -21,16 +21,22 @@ const ThemeSwitch = () => {
 		mounted && (
 			<React.Fragment>
 				{theme === "dark" ? (
-					<SVG
+					<Image
 						src={"/assets/svg/sun.svg"}
 						className="cursor"
+						alt="moon-icon"
 						onClick={() => setTheme("light")}
+						width={11}
+						height={11}
 					/>
 				) : (
-					<SVG
+					<Image
 						src={"/assets/svg/moon.svg"}
 						className="cursor"
 						onClick={() => setTheme("dark")}
+						alt="moon-icon"
+						width={20}
+						height={20}
 					/>
 				)}
 			</React.Fragment>
