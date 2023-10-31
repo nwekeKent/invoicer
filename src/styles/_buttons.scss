@@ -91,6 +91,10 @@
 	padding-left: 8px;
 	cursor: pointer;
 	padding-right: 17px;
+
+	@include respondMax("sm-mobile") {
+		gap: 8px;
+	}
 }
 
 .button__add-new-item {

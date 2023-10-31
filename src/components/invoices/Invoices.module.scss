@@ -15,6 +15,10 @@
 			font-size: 3.6rem;
 			color: $col-black;
 			font-weight: 700;
+
+			@include respondMax("sm-mobile") {
+				font-size: 2.4rem;
+			}
 		}
 	}
 
@@ -108,5 +112,94 @@
 [data-theme="dark"] .invoices__empty {
 	h1 {
 		color: $col-white;
+	}
+}
+
+.invoices__list {
+	width: 100%;
+	height: 100%;
+	padding: 71px 0;
+	overflow: scroll;
+
+	@include respondMax("tablet") {
+		padding: 62px 0;
+	}
+
+	@include respondMax("sm-mobile") {
+		padding: 32px 0;
+	}
+}
+
+.single__invoice {
+	height: 7.1rem;
+	padding: 0 32px;
+
+	@include flex(space-between, center, row nowrap);
+	gap: 51px;
+
+	@include respondMax("tablet") {
+		gap: 20px;
+		padding: 0 24px;
+	}
+
+	@include respondMax("sm-mobile") {
+		height: 13.4rem;
+	}
+
+	&:not(:first-child) {
+		margin-top: 17px;
+	}
+
+	&_top {
+		@include flex(flex-start, center, row);
+		gap: 29px;
+		flex-shrink: 0;
+
+		& > div {
+			p:nth-child(2) {
+				margin-top: 9px;
+				display: none;
+
+				@include respondMax("sm-mobile") {
+					display: block;
+				}
+			}
+		}
+
+		@include respondMax("tablet") {
+			gap: 10px;
+		}
+
+		@include respondMax("sm-mobile") {
+			@include flex(flex-start, flex-start, column);
+			gap: 24px;
+		}
+	}
+
+	&_bottom {
+		width: 100%;
+		@include flex(space-between, center, row);
+
+		& > p:nth-child(2) {
+			display: block;
+
+			@include respondMax("sm-mobile") {
+				display: none;
+			}
+		}
+
+		img {
+			display: block;
+
+			@include respondMax("sm-mobile") {
+				display: none;
+			}
+		}
+
+		@include respondMax("sm-mobile") {
+			width: auto;
+			@include flex(flex-start, flex-start, column);
+			gap: 24px;
+		}
 	}
 }

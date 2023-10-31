@@ -1,13 +1,14 @@
 import React from "react";
 import InvoicesHeader from "./InvoicesHeader";
-import EmptyInvoice from "./EmptyInvoice";
+import EmptyInvoice from "./components/EmptyInvoice";
 import styles from "./Invoices.module.scss";
+import InvoicesList from "./components/InvoicesList";
 
 const Invoices = () => {
 	return (
 		<section className={styles.invoice__page}>
 			<InvoicesHeader />
-			<EmptyInvoice />
+			<InvoicesList />
 		</section>
 	);
 };

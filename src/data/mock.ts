@@ -6,9 +6,9 @@ interface Invoice {
 	name: string;
 }
 
-const invoices: Invoice[] = [
+export const invoices: Invoice[] = [
 	{
-		id: "#RT3080",
+		id: "RT3080",
 		dueDate: " 19 Aug 2021",
 		amount: 2000,
 		invoiceStatus: "pending",
@@ -16,7 +16,7 @@ const invoices: Invoice[] = [
 	},
 
 	{
-		id: "#XM9141",
+		id: "XM9141",
 		dueDate: " 20 Aug 2021",
 		amount: 500.34,
 		invoiceStatus: "paid",

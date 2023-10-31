@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Invoices.module.scss";
+import styles from "../Invoices.module.scss";
 import Image from "next/image";
 
 const EmptyInvoice = () => {
