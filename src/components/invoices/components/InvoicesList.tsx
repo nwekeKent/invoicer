@@ -6,12 +6,8 @@ import { invoices } from "@/data/mock";
 import styles from "../Invoices.module.scss";
 import { StatusPill } from "@/app/shared/StatusPill";
 import Image from "next/image";
-import { useMediaQuery } from "react-responsive";
 
 const InvoicesList = () => {
-	const isMobile = useMediaQuery({
-		query: "(max-width: 650px)",
-	});
 	return (
 		<div className={styles.invoices__list}>
 			{invoices.map(invoice => {

@@ -22,4 +22,11 @@ export const invoices: Invoice[] = [
 		invoiceStatus: "paid",
 		name: "John Morrison",
 	},
+	{
+		id: "WT3080",
+		dueDate: " 19 Aug 2021",
+		amount: 20.67,
+		invoiceStatus: "pending",
+		name: "Kent Tochukwu",
+	},
 ];

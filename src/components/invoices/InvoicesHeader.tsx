@@ -5,18 +5,23 @@ import styles from "./Invoices.module.scss";
 import Image from "next/image";
 import InvoiceFilter from "./components/InvoiceFilter";
 import { useMediaQuery } from "react-responsive";
+import { invoices } from "@/data/mock";
 
 const InvoicesHeader = () => {
 	const isMobile = useMediaQuery({
 		query: "(max-width: 650px)",
 	});
 
+	const totalInvoice = invoices.length;
+
 	return (
 		<header className={styles.invoices__header}>
 			<div className={styles.invoices__header__left}>
 				<h3>Invoices</h3>
 				<small className="small-para-grey">
-					{isMobile ? "7 Invoices" : "There are 7 total invoices"}
+					{isMobile
+						? `${totalInvoice} Invoices`
+						: `There are ${totalInvoice} total invoices`}
 				</small>
 			</div>
 			<div className={styles.invoices__header__right}>

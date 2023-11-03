@@ -22,6 +22,35 @@ html {
 	@include flex(stretch, stretch, column);
 }
 
+::-webkit-scrollbar {
+	width: 8px;
+	margin-left: 5px;
+	max-height: 3px;
+	display: none;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: white;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #555;
+	transition: all 0.3s ease;
+	border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+:root {
+	scrollbar-color: rgb(210, 210, 210) rgb(46, 54, 69) !important;
+	scrollbar-width: thin !important;
+}
+
 body {
 	flex-grow: 1;
 	font-size: 1.5rem;
