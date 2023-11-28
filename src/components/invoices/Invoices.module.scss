@@ -9,6 +9,7 @@
 .invoices__header {
 	@include flex(space-between, center, row nowrap);
 	position: relative;
+	margin-bottom: 20px;
 
 	&__left {
 		h3 {
@@ -118,15 +119,16 @@
 .invoices__list {
 	width: 100%;
 	height: 100%;
-	padding: 71px 0;
+	padding-top: 44px;
+	padding-bottom: 50px;
 	overflow: scroll;
 
 	@include respondMax("tablet") {
-		padding: 62px 0;
+		padding-top: 34px;
 	}
 
 	@include respondMax("sm-mobile") {
-		padding: 32px 0;
+		padding-top: 12px;
 	}
 }
 
@@ -201,5 +203,51 @@
 			@include flex(flex-start, flex-start, column);
 			gap: 24px;
 		}
+	}
+}
+
+/* INVOICE DETAILS */
+
+.invoice__details {
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+	background: #000;
+
+	.action__details {
+		@include flex(flex-start, center, row);
+		gap: 24px;
+		margin-bottom: 35px;
+	}
+
+	.actions__card {
+		width: 100%;
+		height: 88px;
+		padding: 0 32px;
+		@include flex(space-between, center, row);
+
+		&__left {
+			@include flex(flex-start, center, row);
+			gap: 20px;
+
+			.statusp {
+				color: #858bb2;
+				font-size: 1.3rem;
+				font-weight: 500;
+				line-height: 1.5rem;
+			}
+		}
+
+		&__right {
+			@include flex(flex-start, center, row);
+			gap: 8px;
+		}
+	}
+
+	&__card {
+		width: 100%;
+		margin-top: 24px;
+		min-height: 500px;
+		height: auto;
 	}
 }

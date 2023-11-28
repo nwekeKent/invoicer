@@ -58,3 +58,15 @@
 [data-theme="dark"] .alt-small-faded-purple {
 	color: $col-white;
 }
+
+.alt-bold-purple {
+	color: $col-faded-purple;
+	font-size: 1.5rem;
+	font-weight: 700;
+	line-height: 1.5rem; /* 100% */
+	letter-spacing: -0.25px;
+}
+
+[data-theme="dark"] .alt-bold-purple {
+	color: $col-grey;
+}

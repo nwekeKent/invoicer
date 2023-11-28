@@ -72,8 +72,8 @@
 .app__mainbody {
 	width: calc(100vw - 103px);
 	height: 100vh;
-	padding: 78px 48px;
-	overflow-y: scroll;
+	padding: 78px 48px 78px 48px;
+	overflow-y: hidden;
 
 	@include respondMax("tablet") {
 		width: 100%;
