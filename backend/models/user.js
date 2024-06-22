@@ -21,13 +21,10 @@ class User {
 
 	static fromFirestore(doc) {
 		const data = doc.data();
-		return new User(
-			doc.id,
-			data.name,
-			data.email,
-			data.companyName,
-			data.address
-		);
+		return {
+			id: doc.id,
+			...data,
+		};
 	}
 
 	toFirestore() {

@@ -18,3 +18,7 @@ benchmarks/graphs
 # environment variables
 .env
 .env.local
+
+#secretAccont
+
+/config/serviceAccountKey.json
