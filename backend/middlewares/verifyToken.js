@@ -20,7 +20,9 @@ const verifyToken = async (req, res, next) => {
 		res.status(401).json({
 			status: "Failed",
 			error: "Authorization Failed. Invalid Credentials",
-			header: error,
+			message:
+				error.code === "auth/id-token-expired" &&
+				" Id token has expired, please generate a new one.",
 		});
 	}
 };

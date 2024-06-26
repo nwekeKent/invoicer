@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const userRoutes = require("./routes/user");
+const invoicesRoutes = require("./routes/invoices");
 
 const app = express();
 app.set("view engine", "pug");
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", userRoutes);
+app.use(invoicesRoutes);
 
 app.get("/", (req, res) => {
 	res.send("Hello, World!");

@@ -24,7 +24,7 @@ exports.loginUser = async (req, res) => {
 		const idToken = await userCredential.user.getIdToken();
 
 		res.status(200).json({
-			status: "Failed",
+			status: "Success",
 			message: "Login successful",
 			token: idToken,
 			user: {
@@ -113,7 +113,8 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
 	const { id } = req.params;
-	const { name, companyName, address } = req.body;
+	const { name, companyName, email, streetAddress, city, postCode, country } =
+		req.body;
 
 	try {
 		const userRef = db.collection("users").doc(id);
@@ -127,14 +128,25 @@ exports.updateUser = async (req, res) => {
 		const updatedData = {};
 		if (name) updatedData.name = name;
 		if (companyName) updatedData.companyName = companyName;
-		if (address) updatedData.address = address;
+		if (email) updatedData.email = email;
+		if (streetAddress && city && postCode && country)
+			updatedData.address = {
+				streetAddress,
+				city,
+				postCode,
+				country,
+			};
 
 		await userRef.update(updatedData);
 
 		const updatedUserDoc = await userRef.get();
 		const updatedUser = User.fromFirestore(updatedUserDoc);
 
-		res.status(200).json({ message: "User updated successfully", updatedUser });
+		res.status(200).json({
+			status: "Success",
+			message: "User updated successfully",
+			updatedUser,
+		});
 	} catch (error) {
 		res.status(500).json({ status: "Failed", error: error.message });
 	}
@@ -142,20 +154,30 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
 	const { id } = req.params;
-
 	try {
+		// Delete user document from Firestore
 		const userRef = db.collection("users").doc(id);
-		const userDoc = await userRef.get();
-		if (!userDoc.exists) {
-			return res.status(404).json({ error: "User not found" });
-		}
+		const doc = await userRef.get();
 
+		// check if user exist in db
+		if (!doc.exists) {
+			return res
+				.status(404)
+				.json({ status: "Failed", error: "User not found" });
+		}
+		// delete user from user collection
 		await userRef.delete();
+
+		// Delete user account from Firebase Authentication
+		await auth.deleteUser(id);
+
 		res.status(200).json({
-			message: "User deleted successfully",
-			user: User.fromFirestore(userDoc),
+			status: "Success",
+			message: "User account has been deleted successfully.",
 		});
 	} catch (error) {
-		res.status(500).json({ error: error.message });
+		res
+			.status(500)
+			.json({ error: "Error deleting user account.", error: error.message });
 	}
 };
