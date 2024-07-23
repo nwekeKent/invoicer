@@ -1,6 +1,5 @@
 import React from "react";
 import InvoicesHeader from "./InvoicesHeader";
-import EmptyInvoice from "./components/EmptyInvoice";
 import styles from "./Invoices.module.scss";
 import InvoicesList from "./components/InvoicesList";
 

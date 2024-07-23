@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styles from "../Invoices.module.scss";
 import Image from "next/image";
-import Checkbox from "@/app/shared/Checkbox";
+import Checkbox from "@/components/shared/Checkbox";
 import { useMediaQuery } from "react-responsive";
 
 const InvoiceFilter = () => {

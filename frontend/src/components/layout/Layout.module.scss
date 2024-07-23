@@ -74,6 +74,7 @@
 	height: 100vh;
 	padding: 78px 48px 78px 48px;
 	overflow-y: hidden;
+	position: relative;
 
 	@include respondMax("tablet") {
 		width: 100%;

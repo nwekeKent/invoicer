@@ -1,5 +1,6 @@
 import Invoices from "@/components/invoices/Invoices";
 import EmptyInvoice from "@/components/invoices/components/EmptyInvoice";
+import { InvoiceCrud } from "@/components/invoices/components/invoice-crud/InvoiceCrud";
 import { invoices } from "@/data/mock";
 import React from "react";
 
@@ -9,6 +10,7 @@ export default function Home() {
 	return (
 		<React.Fragment>
 			{totalInvoice > 0 ? <Invoices /> : <EmptyInvoice />}
+			<InvoiceCrud />
 		</React.Fragment>
 	);
 }

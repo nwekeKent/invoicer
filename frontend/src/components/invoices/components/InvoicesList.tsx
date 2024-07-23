@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import Card from "@/app/shared/Card";
+import Card from "@/components/shared/Card";
 import { invoices } from "@/data/mock";
 import styles from "../Invoices.module.scss";
-import { StatusPill } from "@/app/shared/StatusPill";
+import { StatusPill } from "@/components/shared/StatusPill";
 import Image from "next/image";
 
 const InvoicesList = () => {
