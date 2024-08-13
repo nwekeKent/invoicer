@@ -47,14 +47,14 @@ const initialValues = {
 	itemList: [{ name: "", quantity: "", price: "" }],
 };
 
-const NewInvoice = () => {
+const EditInvoice = () => {
 	const handleSubmit = (val: any) => {
 		console.log("val", val);
 	};
 
 	return (
 		<div className={styles.crud__div}>
-			<h1 className={styles.crudTitle}>New Invoice</h1>
+			<h1 className={styles.crudTitle}>Edit Invoice</h1>
 			<Formik
 				initialValues={initialValues}
 				onSubmit={handleSubmit}
@@ -151,7 +151,7 @@ const NewInvoice = () => {
 
 						<h3 className={styles.section__title}></h3>
 
-						<div className="grided-input grided-2-input">
+						<div className="grided-input">
 							<Field
 								placeholder="Invoice Date"
 								label="Invoice Date"
@@ -195,7 +195,7 @@ const NewInvoice = () => {
 
 												<div className={styles.item__deets}>
 													<Field
-														placeholder="qty"
+														placeholder=""
 														label="Qty"
 														type="number"
 														name={`itemList.${index}.quantity`}
@@ -214,16 +214,14 @@ const NewInvoice = () => {
 														<label htmlFor="">Total</label>
 														<div className={styles.price}>200.00</div>
 													</div>
-													<div>
-														{" "}
-														<Image
-															src={"/assets/svg/invoices/delete.svg"}
-															width={12}
-															height={16}
-															alt="trash-can"
-															onClick={() => remove(index)}
-														/>
-													</div>
+
+													<Image
+														src={"/assets/svg/invoices/delete.svg"}
+														width={12}
+														height={16}
+														alt="trash-can"
+														onClick={() => remove(index)}
+													/>
 												</div>
 											</div>
 										);
@@ -246,4 +244,4 @@ const NewInvoice = () => {
 	);
 };
 
-export default NewInvoice;
+export default EditInvoice;

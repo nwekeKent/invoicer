@@ -16,6 +16,7 @@ exports.createInvoice = async (req, res) => {
 		clientPostCode,
 		clientCountry,
 		invoiceDate,
+		dueDate,
 		projectDescription,
 		itemList,
 	} = req.body;
@@ -31,6 +32,8 @@ exports.createInvoice = async (req, res) => {
 		!clientCity ||
 		!clientPostCode ||
 		!clientCountry ||
+		!invoiceDate ||
+		!dueDate ||
 		!projectDescription ||
 		!itemList
 	) {
@@ -54,6 +57,7 @@ exports.createInvoice = async (req, res) => {
 		clientPostCode,
 		clientCountry,
 		invoiceDate,
+		dueDate,
 		projectDescription,
 		status,
 		itemList
@@ -141,6 +145,7 @@ exports.updateInvoice = async (req, res) => {
 			clientPostCode,
 			clientCountry,
 			invoiceDate,
+			dueDate,
 			projectDescription,
 			itemList,
 		} = req.body;
@@ -158,6 +163,7 @@ exports.updateInvoice = async (req, res) => {
 			clientPostCode,
 			clientCountry,
 			invoiceDate,
+			dueDate,
 			projectDescription,
 			status,
 			itemList

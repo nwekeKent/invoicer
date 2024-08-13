@@ -2,10 +2,22 @@
 
 .grided-input {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 24px;
+	grid-template-columns: repeat(auto-fit, minmax(152px, 1fr));
+	column-gap: 24px;
+
+	@include respondMax("sm-mobile") {
+		grid-template-columns: repeat(2, 1fr);
+		div:nth-child(3) {
+			grid-column: span 2;
+		}
+	}
 }
 
+.grided-2-input {
+	@include respondMax("mobile") {
+		grid-template-columns: 1fr;
+	}
+}
 .input-container {
 	width: 100%;
 	margin-bottom: 25px;
@@ -14,28 +26,28 @@
 		margin-bottom: 8px;
 		@include flex(space-between, center, row);
 
-		label {
-			color: $col-faded-purple;
-			font-size: 1.3rem;
-			font-weight: 500;
-			line-height: 1.5rem; /* 115.385% */
-			text-transform: capitalize;
-
-			&:disabled {
-				opacity: 0.5;
-			}
-		}
-
-		label.isError {
-			color: $col-red;
-		}
-
 		.error-input-message {
 			color: $col-red;
 			font-size: 1rem;
 			font-weight: 600;
 			line-height: 1.5rem; /* 150% */
 		}
+	}
+
+	label {
+		color: $col-faded-purple;
+		font-size: 1.3rem;
+		font-weight: 500;
+		line-height: 1.5rem; /* 115.385% */
+		text-transform: capitalize;
+
+		&:disabled {
+			opacity: 0.5;
+		}
+	}
+
+	label.isError {
+		color: $col-red;
 	}
 
 	input {
@@ -54,6 +66,7 @@
 		&::placeholder {
 			font-weight: 400;
 			text-transform: capitalize;
+			font-size: 1.4rem;
 		}
 
 		&:focus,
@@ -61,6 +74,12 @@
 		&:focus-visible {
 			border-color: $col-purple-lte;
 		}
+	}
+
+	input.ghost-input {
+		outline: 0;
+		border: 1px solid black;
+		color: $col-faded-purple;
 	}
 
 	input.qty {
@@ -99,6 +118,7 @@
 	input {
 		background: $col-navy-blue;
 		border-color: $col-navy-blue-lte;
+		color: $col-light-bg;
 	}
 
 	input.isError {
@@ -224,5 +244,23 @@
 
 	p {
 		color: #33d69f;
+	}
+}
+
+/* MODAL */
+.modal-wrapper {
+	position: absolute;
+	@include flex(center, center, row nowrap);
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+
+	.modal__card {
+		height: 220px;
+		width: 327px;
+		padding: 34px;
 	}
 }

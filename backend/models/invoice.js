@@ -42,6 +42,7 @@ class Invoice {
 		clientPostCode,
 		clientCountry,
 		invoiceDate,
+		dueDate,
 		projectDescription,
 		status,
 		itemList
@@ -59,6 +60,7 @@ class Invoice {
 		this.clientPostCode = clientPostCode;
 		this.clientCountry = clientCountry;
 		this.invoiceDate = invoiceDate;
+		this, (dueDate = dueDate);
 		this.projectDescription = projectDescription;
 		this.status = status;
 
@@ -98,6 +100,7 @@ class Invoice {
 				country: this.clientCountry,
 			},
 			invoiceDate: this.invoiceDate,
+			dueDate: this.dueDate,
 			projectDescription: this.projectDescription,
 			itemList: this.itemList.map(item => item.toPlainObject()),
 		};

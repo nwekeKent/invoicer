@@ -7,6 +7,11 @@ export const InvoiceCrud = () => {
 		<div className={styles.invoice__crud}>
 			<div className={styles.crud__card}>
 				<NewInvoice />
+
+				<div className={styles.crud__cta}>
+					<button className="button__edit">Cancel</button>
+					<button className="button__primary">Save & Send</button>
+				</div>
 			</div>
 		</div>
 	);

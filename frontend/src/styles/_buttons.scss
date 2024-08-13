@@ -112,4 +112,11 @@
 	line-height: 15px;
 	@include flex(center, center, row);
 	gap: 16px;
+	background: #f9fafe;
+	color: $col-faded-purple;
+}
+
+[data-theme="dark"] .button__add-new-item {
+	background-color: $col-navy-blue-lte;
+	color: $col-ultra-faded-purple;
 }
