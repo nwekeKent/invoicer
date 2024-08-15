@@ -10,6 +10,13 @@ const InvoiceDetails = () => {
 		<section className={styles.invoice__details}>
 			<Header />
 			<DetailsCard />
+
+			<div className={styles.header__cta}>
+				<button className="button__edit">Edit</button>
+				<button className="button__delete">Delete</button>
+
+				<button className="button__primary">Mark as Paid</button>
+			</div>
 		</section>
 	);
 };
