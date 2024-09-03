@@ -1,13 +1,15 @@
 import React from "react";
-import InvoicesHeader from "./InvoicesHeader";
 import styles from "./Invoices.module.scss";
 import InvoicesList from "./components/InvoicesList";
 
-const Invoices = () => {
+interface MyComponentProps {
+	invoices: any;
+}
+
+const Invoices = ({ invoices }: MyComponentProps) => {
 	return (
 		<section className={styles.invoice__page}>
-			<InvoicesHeader />
-			<InvoicesList />
+			<InvoicesList invoices={invoices} />
 		</section>
 	);
 };

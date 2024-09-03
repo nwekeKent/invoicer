@@ -2,12 +2,16 @@
 
 import React from "react";
 import Card from "@/components/shared/Card";
-import { invoices } from "@/data/mock";
+// import { invoices } from "@/data/mock";
 import styles from "../Invoices.module.scss";
 import { StatusPill } from "@/components/shared/StatusPill";
 import Image from "next/image";
 
-const InvoicesList = () => {
+interface MyComponentProps {
+	invoices: any;
+}
+
+const InvoicesList = ({ invoices }: MyComponentProps) => {
 	return (
 		<div className={styles.invoices__list}>
 			{invoices.map(invoice => {

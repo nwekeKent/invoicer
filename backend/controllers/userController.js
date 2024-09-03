@@ -39,23 +39,9 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.registerUser = async (req, res) => {
-	const {
-		email,
-		password,
-		name,
-		companyName,
-		streetAddress,
-		city,
-		postCode,
-		country,
-	} = req.body;
+	const { email, password, name, companyName } = req.body;
 
-	if (
-		(!email || !password || !name || !companyName || !streetAddress,
-		!city,
-		!postCode,
-		!country)
-	) {
+	if (!email || !password || !name) {
 		return res
 			.status(400)
 			.json({ error: "All fields are required", data: req.body });
@@ -68,16 +54,7 @@ exports.registerUser = async (req, res) => {
 			displayName: name,
 		});
 
-		const user = new User(
-			userRecord.uid,
-			name,
-			email,
-			companyName,
-			streetAddress,
-			city,
-			postCode,
-			country
-		);
+		const user = new User(userRecord.uid, name, email, companyName);
 		await db.collection("users").doc(user.id).set(user.toFirestore());
 
 		res.status(201).json({
@@ -113,8 +90,7 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
 	const { id } = req.params;
-	const { name, companyName, email, streetAddress, city, postCode, country } =
-		req.body;
+	const { name, companyName, email } = req.body;
 
 	try {
 		const userRef = db.collection("users").doc(id);
@@ -129,14 +105,6 @@ exports.updateUser = async (req, res) => {
 		if (name) updatedData.name = name;
 		if (companyName) updatedData.companyName = companyName;
 		if (email) updatedData.email = email;
-		if (streetAddress && city && postCode && country)
-			updatedData.address = {
-				streetAddress,
-				city,
-				postCode,
-				country,
-			};
-
 		await userRef.update(updatedData);
 
 		const updatedUserDoc = await userRef.get();

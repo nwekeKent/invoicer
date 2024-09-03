@@ -1,0 +1,133 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.auth__wrapper {
+	width: 100%;
+	position: relative;
+	background: $col-light-bg;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	min-height: 100vh;
+	overflow-y: scroll;
+
+	@include respondMax("sm-mobile") {
+		grid-template-columns: 1fr;
+		min-height: auto;
+	}
+
+	.auth__para {
+		display: none;
+		cursor: pointer;
+		text-align: center;
+		margin-top: 4rem;
+		font-size: 1.6rem;
+		color: $col-grey;
+		span {
+			font-weight: 700;
+			color: $col-black-2;
+		}
+
+		@include respondMax("sm-mobile") {
+			display: block;
+		}
+	}
+
+	// padding: 10px 10px 10px 0;
+}
+
+.auth__deco {
+	padding: 20px 20px 20px 0px;
+	height: 100vh;
+	@include respondMax("sm-mobile") {
+		display: none;
+	}
+
+	div {
+		background: $col-black-2;
+		min-height: 100%;
+		border-radius: 20px;
+		position: relative;
+
+		button {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+		}
+	}
+}
+
+.form__logo {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+
+	@include respondMax("sm-mobile") {
+		position: relative;
+		height: 40px;
+		top: 0;
+		left: 0;
+	}
+}
+
+.auth__form {
+	padding: 20px 20px;
+	overflow-y: auto;
+	@include flex(center, center, column nowrap);
+
+	@include respondMax("sm-mobile") {
+		@include flex(flex-start, flex-start, column nowrap);
+	}
+
+	.auth__form__area {
+		width: 100%;
+		max-width: 550px;
+		overflow-y: auto;
+
+		@include respondMax("sm-mobile") {
+			margin-top: 5rem;
+			max-width: 100%;
+		}
+	}
+
+	h3 {
+		font-size: 3.6rem;
+		color: $col-black;
+		font-weight: 700;
+		margin-bottom: 10px;
+
+		@include respondMax("sm-mobile") {
+			font-size: 2.4rem;
+		}
+	}
+
+	h2 {
+		margin-top: 40px;
+	}
+}
+
+[data-theme="dark"] .auth__form {
+	h3 {
+		color: $col-white;
+	}
+}
+
+[data-theme="dark"] .auth__deco {
+	div {
+		background: $col-light-bg;
+	}
+}
+
+[data-theme="dark"] .auth__wrapper {
+	background: $col-black-2;
+
+	.auth__para {
+		text-align: center;
+		margin-top: 4rem;
+		font-size: 1.6rem;
+		color: $col-light-bg;
+		span {
+			font-weight: 700;
+			color: $col-purple;
+		}
+	}
+}

@@ -1,20 +1,48 @@
-import Invoices from "@/components/invoices/Invoices";
-import EmptyInvoice from "@/components/invoices/components/EmptyInvoice";
-import { InvoiceCrud } from "@/components/invoices/components/invoice-crud/InvoiceCrud";
-import Modal from "@/components/shared/Modal";
-import { invoices } from "@/data/mock";
-import React from "react";
+"use client";
+
+import Image from "next/image";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { Toast } from "@/components/shared/Toast";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-	const totalInvoice = invoices.length;
+	const router = useRouter();
+	useEffect(() => {
+		const verifyToken = async () => {
+			const token = localStorage.getItem("token");
+			if (token) {
+				try {
+					const res = await axios.post("http://localhost:8080/check-token", {
+						token: token,
+					});
+					if (res.status === 200) {
+						router.push("/invoices");
+					} else if (res.status === 401) {
+						router.push("/auth/login");
+					}
+					console.log(res);
+				} catch {
+					Toast.fire({
+						icon: "error",
+						title: "An error occured",
+					});
+				}
+			} else {
+				router.push("/auth/register");
+			}
+		};
+		verifyToken();
+	}, []);
 
 	return (
-		<React.Fragment>
-			{totalInvoice > 0 ? <Invoices /> : <EmptyInvoice />}
-			<InvoiceCrud />
-			{/* <Modal>
-				<p>testing</p>
-			</Modal> */}
-		</React.Fragment>
+		<div className="home-loader">
+			<Image
+				src={"/assets/svg/logo-rectangle.svg"}
+				alt="app-logo"
+				height={80}
+				width={80}
+			/>
+		</div>
 	);
 }

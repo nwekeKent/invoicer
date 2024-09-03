@@ -7,7 +7,11 @@ import InvoiceFilter from "./components/InvoiceFilter";
 import { useMediaQuery } from "react-responsive";
 import { invoices } from "@/data/mock";
 
-const InvoicesHeader = () => {
+interface MyComponentProps {
+	invoiceLength: number;
+}
+
+const InvoicesHeader = ({ invoiceLength }: MyComponentProps) => {
 	const isMobile = useMediaQuery({
 		query: "(max-width: 650px)",
 	});
@@ -20,8 +24,8 @@ const InvoicesHeader = () => {
 				<h3>Invoices</h3>
 				<small className="small-para-grey">
 					{isMobile
-						? `${totalInvoice} Invoices`
-						: `There are ${totalInvoice} total invoices`}
+						? `${invoiceLength} Invoices`
+						: `There are ${invoiceLength} total invoices`}
 				</small>
 			</div>
 			<div className={styles.invoices__header__right}>
