@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Login } from "./Login";
 import { Register } from "./Register";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Auth = () => {
 	const router = useRouter();
@@ -27,16 +28,14 @@ const Auth = () => {
 			</section>
 			<section className={styles.auth__deco}>
 				<div>
-					<button
-						className="button__edit"
-						type="button"
-						onClick={() => {
-							pathname === "/auth/login"
-								? router.push("/auth/register")
-								: router.push("/auth/login");
-						}}
-					>
-						{pathname === "/auth/login" ? "Sign up" : "Login"}
+					<button className="button__edit" type="button">
+						<Link
+							href={
+								pathname === "/auth/login" ? "/auth/login" : "/auth/register"
+							}
+						>
+							{pathname === "/auth/login" ? "Sign up" : "Login"}
+						</Link>
 					</button>
 				</div>
 			</section>

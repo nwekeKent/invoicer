@@ -1,15 +1,33 @@
+"use client";
+
 import React from "react";
 import styles from "../../Invoices.module.scss";
 import { StatusPill } from "@/components/shared/StatusPill";
 import Image from "next/image";
 import Card from "@/components/shared/Card";
 import { invoices } from "@/data/mock";
+import { useRouter } from "next/navigation";
 
-const Header = () => {
+interface InvoiceProps {
+	invoiceStatus?: "Pending" | "Paid" | undefined;
+	setEditInvoice: React.Dispatch<React.SetStateAction<boolean>>;
+	setDeleteInvoice: React.Dispatch<React.SetStateAction<boolean>>;
+	submitting: boolean;
+	markAsPaid: () => void;
+}
+
+const Header = ({
+	invoiceStatus,
+	setEditInvoice,
+	setDeleteInvoice,
+	submitting,
+	markAsPaid,
+}: InvoiceProps) => {
+	const router = useRouter();
 	return (
 		<div>
 			{" "}
-			<div className={styles.action__details}>
+			<div className={styles.action__details} onClick={() => router.back()}>
 				<Image
 					src={"/assets/svg/invoices/arrow-left.svg"}
 					width={9}
@@ -21,13 +39,22 @@ const Header = () => {
 			<Card containerClass={styles.actions__card}>
 				<div className={styles.actions__card__left}>
 					<p className={styles.statusp}>status</p>
-					<StatusPill status={invoices[0].invoiceStatus} />
+					<StatusPill status={invoiceStatus} />
 				</div>
 				<div className={styles.actions__card__right}>
-					<button className="button__edit">Edit</button>
-					<button className="button__delete">Delete</button>
-					{invoices[0].invoiceStatus !== "paid" && (
-						<button className="button__primary">Mark as Paid</button>
+					<button className="button__edit" onClick={() => setEditInvoice(true)}>
+						Edit
+					</button>
+					<button
+						className="button__delete"
+						onClick={() => setDeleteInvoice(true)}
+					>
+						Delete
+					</button>
+					{invoiceStatus !== "Paid" && (
+						<button className="button__primary" onClick={markAsPaid}>
+							{submitting ? "Updating" : "Mark as Paid"}
+						</button>
 					)}
 				</div>
 			</Card>

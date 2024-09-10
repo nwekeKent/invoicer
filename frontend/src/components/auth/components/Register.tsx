@@ -5,9 +5,9 @@ import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import Input from "@/components/shared/Input";
 import style from "../Auth.module.scss";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Toast } from "@/components/shared/Toast";
+import Link from "next/link";
 
 const FormSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid email").required("required"),
@@ -51,7 +51,6 @@ const handleSubmit = async (
 };
 
 export const Register = () => {
-	const router = useRouter();
 	return (
 		<div>
 			<h3>Create an account</h3>
@@ -91,7 +90,7 @@ export const Register = () => {
 						<Field
 							placeholder="Password"
 							label="Password"
-							type="text"
+							type="password"
 							name="password"
 							component={Input}
 						/>
@@ -106,7 +105,9 @@ export const Register = () => {
 
 						<p className={style.auth__para}>
 							Already have an account?{" "}
-							<span onClick={() => router.push("/auth/login")}>Sign In.</span>
+							<span>
+								<Link href="/auth/login">Sign in.</Link>
+							</span>
 						</p>
 					</Form>
 				)}

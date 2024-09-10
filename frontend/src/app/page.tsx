@@ -18,15 +18,9 @@ export default function Home() {
 					});
 					if (res.status === 200) {
 						router.push("/invoices");
-					} else if (res.status === 401) {
-						router.push("/auth/login");
 					}
-					console.log(res);
 				} catch {
-					Toast.fire({
-						icon: "error",
-						title: "An error occured",
-					});
+					router.push("/auth/login");
 				}
 			} else {
 				router.push("/auth/register");

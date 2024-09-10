@@ -166,7 +166,8 @@ exports.updateInvoice = async (req, res) => {
 			dueDate,
 			projectDescription,
 			status,
-			itemList
+			itemList,
+			id
 		);
 
 		const invoiceRef = db.collection("invoices").doc(id);

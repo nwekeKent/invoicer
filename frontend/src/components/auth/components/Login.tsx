@@ -8,6 +8,7 @@ import style from "../Auth.module.scss";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Toast } from "@/components/shared/Toast";
+import Link from "next/link";
 
 const FormSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid email").required("required"),
@@ -19,7 +20,7 @@ const initialValues = {
 	password: "",
 };
 
-const formatMsg = str => {
+const formatMsg = (str: string) => {
 	let newStr = "";
 
 	if (str) {
@@ -87,7 +88,7 @@ export const Login = () => {
 						<Field
 							placeholder="Password"
 							label="Password"
-							type="text"
+							type="password"
 							name="password"
 							component={Input}
 						/>
@@ -101,9 +102,9 @@ export const Login = () => {
 						</button>
 
 						<p className={style.auth__para}>
-							Don't have an account?{" "}
-							<span onClick={() => router.push("/auth/register")}>
-								Sign Up.
+							{`Don't have an account?`}{" "}
+							<span>
+								<Link href="/auth/register">Create account.</Link>
 							</span>
 						</p>
 					</Form>

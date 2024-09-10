@@ -3,8 +3,6 @@
 import Invoices from "@/components/invoices/Invoices";
 import EmptyInvoice from "@/components/invoices/components/EmptyInvoice";
 import { InvoiceCrud } from "@/components/invoices/components/invoice-crud/InvoiceCrud";
-import Modal from "@/components/shared/Modal";
-import { invoices } from "@/data/mock";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
@@ -15,7 +13,10 @@ import InvoicesHeader from "@/components/invoices/InvoicesHeader";
 export default function InvoicesPage() {
 	const router = useRouter();
 	const [invoices, setInvoices] = useState([]);
+	const [invoiceFilter, setInvoiceFilter] = useState("All");
 	const [isFetching, setisFetching] = useState(true);
+	const [newInvoice, setNewInvoice] = useState(false);
+	const [crudAction, setCrudAction] = useState(false);
 
 	interface User {
 		uid: string;
@@ -58,7 +59,7 @@ export default function InvoicesPage() {
 			}
 		};
 		fetchInvoices();
-	}, []);
+	}, [router, crudAction]);
 
 	if (isFetching)
 		return (
@@ -74,13 +75,23 @@ export default function InvoicesPage() {
 
 	return (
 		<React.Fragment>
-			<InvoicesHeader invoiceLength={invoices.length} />
+			<InvoicesHeader
+				invoiceLength={invoices.length}
+				setNewInvoice={setNewInvoice}
+				setInvoiceFilter={setInvoiceFilter}
+				invoiceFilter={invoiceFilter}
+			/>
 			{invoices.length > 0 ? (
-				<Invoices invoices={invoices} />
+				<Invoices invoices={invoices} invoiceFilter={invoiceFilter} />
 			) : (
 				<EmptyInvoice />
 			)}
-			{/* <InvoiceCrud /> */}
+			{newInvoice && (
+				<InvoiceCrud
+					setCrudAction={setCrudAction}
+					setNewInvoice={setNewInvoice}
+				/>
+			)}
 			{/* <Modal>
 				<p>testing</p>
 			</Modal> */}

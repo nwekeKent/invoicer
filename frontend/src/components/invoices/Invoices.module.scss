@@ -135,9 +135,9 @@
 .single__invoice {
 	height: 7.1rem;
 	padding: 0 32px;
-
+	cursor: pointer;
 	@include flex(space-between, center, row nowrap);
-	gap: 51px;
+	gap: 45px;
 
 	@include respondMax("tablet") {
 		gap: 20px;
@@ -180,10 +180,21 @@
 
 	&_bottom {
 		width: 100%;
+		// background: red;
 		@include flex(space-between, center, row);
+
+		& > p:nth-child(1) {
+			min-width: 100px;
+
+			@include respondMax("sm-mobile") {
+				display: block;
+				text-align: right;
+			}
+		}
 
 		& > p:nth-child(2) {
 			display: block;
+			flex-shrink: 0;
 
 			@include respondMax("sm-mobile") {
 				display: none;
@@ -214,6 +225,10 @@
 	overflow: scroll;
 	position: relative;
 
+	p {
+		text-transform: capitalize;
+	}
+
 	@include respondMax("sm-mobile") {
 		position: absolute;
 		top: 0;
@@ -222,10 +237,19 @@
 		padding-bottom: 120px;
 	}
 
+	.res__align {
+		text-align: right;
+
+		@include respondMax("sm-mobile") {
+			text-align: left;
+		}
+	}
+
 	.action__details {
 		@include flex(flex-start, center, row);
 		gap: 24px;
 		margin-bottom: 35px;
+		cursor: pointer;
 	}
 
 	.actions__card {
@@ -334,10 +358,10 @@
 				& > div h1:nth-child(2) {
 					color: #7e88c3;
 					margin-top: 8px;
-					letter-spacing: 3px;
+					// letter-spacing: 3px;
 				}
 
-				@include respondMax(sm-mobile) {
+				@include respondMax("sm-mobile") {
 					display: flex;
 				}
 			}
@@ -509,6 +533,10 @@
 			grid-template-columns: 46px 100px 1fr 1fr;
 			gap: 16px;
 			align-items: center;
+
+			.qty {
+				padding: 0 5px;
+			}
 
 			.price {
 				margin-top: 8px;

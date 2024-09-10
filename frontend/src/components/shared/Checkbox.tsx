@@ -4,13 +4,23 @@ import React from "react";
 type CheckboxProps = {
 	label: string;
 	handleChange?: () => void;
+	checked?: boolean;
 };
 
-export default function Checkbox({ label, handleChange }: CheckboxProps) {
+export default function Checkbox({
+	label,
+	handleChange,
+	checked,
+}: CheckboxProps) {
 	return (
 		<div className="custom-checkbox">
 			<div>
-				<input type="checkbox" name="check-box" onChange={handleChange} />
+				<input
+					type="checkbox"
+					name="check-box"
+					onChange={handleChange}
+					checked={checked}
+				/>
 				<span className="checkmark">
 					<Image
 						src={"assets/svg/invoices/check.svg"}

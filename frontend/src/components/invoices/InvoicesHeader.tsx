@@ -5,18 +5,23 @@ import styles from "./Invoices.module.scss";
 import Image from "next/image";
 import InvoiceFilter from "./components/InvoiceFilter";
 import { useMediaQuery } from "react-responsive";
-import { invoices } from "@/data/mock";
 
 interface MyComponentProps {
 	invoiceLength: number;
+	setNewInvoice: React.Dispatch<React.SetStateAction<boolean>>;
+	setInvoiceFilter: React.Dispatch<React.SetStateAction<string>>;
+	invoiceFilter: string;
 }
 
-const InvoicesHeader = ({ invoiceLength }: MyComponentProps) => {
+const InvoicesHeader = ({
+	invoiceLength,
+	setNewInvoice,
+	setInvoiceFilter,
+	invoiceFilter,
+}: MyComponentProps) => {
 	const isMobile = useMediaQuery({
 		query: "(max-width: 650px)",
 	});
-
-	const totalInvoice = invoices.length;
 
 	return (
 		<header className={styles.invoices__header}>
@@ -29,8 +34,16 @@ const InvoicesHeader = ({ invoiceLength }: MyComponentProps) => {
 				</small>
 			</div>
 			<div className={styles.invoices__header__right}>
-				<InvoiceFilter />
-				<button className="button__add-new" type="button">
+				<InvoiceFilter
+					setInvoiceFilter={setInvoiceFilter}
+					invoiceFilter={invoiceFilter}
+				/>
+
+				<button
+					className="button__add-new"
+					type="button"
+					onClick={() => setNewInvoice(true)}
+				>
 					<Image
 						src={"/assets/svg/invoices/plus-sign.svg"}
 						width={32}

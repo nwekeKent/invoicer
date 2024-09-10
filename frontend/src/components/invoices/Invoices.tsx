@@ -4,12 +4,13 @@ import InvoicesList from "./components/InvoicesList";
 
 interface MyComponentProps {
 	invoices: any;
+	invoiceFilter: string;
 }
 
-const Invoices = ({ invoices }: MyComponentProps) => {
+const Invoices = ({ invoices, invoiceFilter }: MyComponentProps) => {
 	return (
 		<section className={styles.invoice__page}>
-			<InvoicesList invoices={invoices} />
+			<InvoicesList invoices={invoices} invoiceFilter={invoiceFilter} />
 		</section>
 	);
 };

@@ -4,7 +4,7 @@ export const Toast = Swal.mixin({
 	toast: true,
 	position: "top-end",
 	showConfirmButton: false,
-	timer: 7000,
+	timer: 4000,
 	customClass: {
 		title: "colored-toast",
 	},

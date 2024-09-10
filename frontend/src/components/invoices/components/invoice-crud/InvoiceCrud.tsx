@@ -1,16 +1,166 @@
-import React from "react";
+"use client";
+
+import React, { useState, useRef } from "react";
 import styles from "../../Invoices.module.scss";
 import NewInvoice from "./NewInvoice";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import EditInvoice from "./EditInvoice";
+import axios from "axios";
+import { Toast } from "@/components/shared/Toast";
 
-export const InvoiceCrud = () => {
+interface MyComponentProps {
+	setEditInvoice?: React.Dispatch<React.SetStateAction<boolean>>;
+	setNewInvoice?: React.Dispatch<React.SetStateAction<boolean>>;
+	setCrudAction?: React.Dispatch<React.SetStateAction<boolean>>;
+	setEditAction?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface User {
+	uid: string;
+	// Other properties can be added here
+}
+
+export const InvoiceCrud = ({
+	setNewInvoice,
+	setEditInvoice,
+	setCrudAction,
+	setEditAction,
+}: MyComponentProps) => {
+	const pathname = usePathname();
+	const router = useRouter();
+	const idParams = useSearchParams();
+	const invoiceId = idParams.get("id");
+	const [submitting, setSubmitting] = useState(false);
+
+	const formikSubmitRef = useRef<(() => void) | null>(null);
+	const editSubmitRef = useRef<(() => void) | null>(null);
+
+	const createInvoice = async (val: any) => {
+		console.log("val", val);
+		const token = localStorage.getItem("token");
+		const userString = localStorage.getItem("user");
+		const user: User | null = userString ? JSON.parse(userString) : null;
+		const id = user ? user.uid : "";
+		setSubmitting(true);
+		try {
+			const res = await axios.post(
+				`http://localhost:8080/${id}/invoices`,
+				val,
+				{
+					headers: {
+						authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			console.log("res", res);
+			Toast.fire({
+				icon: "success",
+				title: res.data.message,
+			});
+			setCrudAction && setCrudAction(prev => !prev);
+			setNewInvoice && setNewInvoice(false);
+		} catch (err: any) {
+			if (err.status === 401) {
+				Toast.fire({
+					icon: "error",
+					title: "Session Expired, Please Login",
+				});
+				router.push("/auth/login");
+			} else {
+				Toast.fire({
+					icon: "error",
+					title: err.response.data.error,
+				});
+			}
+		} finally {
+			setSubmitting(false);
+		}
+	};
+
+	const editInvoice = async (val: any) => {
+		console.log("val", val);
+		const token = localStorage.getItem("token");
+		const userString = localStorage.getItem("user");
+		const user: User | null = userString ? JSON.parse(userString) : null;
+		const id = user ? user.uid : "";
+		setSubmitting(true);
+		try {
+			const res = await axios.put(
+				`http://localhost:8080/${id}/invoices/${invoiceId}`,
+				val,
+				{
+					headers: {
+						authorization: `Bearer ${token}`,
+					},
+				}
+			);
+			console.log("res", res);
+			Toast.fire({
+				icon: "success",
+				title: res.data.message,
+			});
+			setEditInvoice && setEditInvoice(false);
+			setEditAction && setEditAction(prev => !prev);
+		} catch (err: any) {
+			if (err.status === 401) {
+				Toast.fire({
+					icon: "error",
+					title: "Session Expired, Please Login",
+				});
+				router.push("/auth/login");
+			} else {
+				Toast.fire({
+					icon: "error",
+					title: err.response.data.error,
+				});
+			}
+		} finally {
+			setSubmitting(false);
+		}
+	};
+
 	return (
 		<div className={styles.invoice__crud}>
 			<div className={styles.crud__card}>
-				<NewInvoice />
+				{pathname === "/invoices" && (
+					<NewInvoice
+						createInvoice={createInvoice}
+						formikSubmitRef={formikSubmitRef}
+					/>
+				)}
+				{pathname.includes("/invoice-details") && (
+					<EditInvoice
+						editInvoice={editInvoice}
+						editSubmitRef={editSubmitRef}
+					/>
+				)}
 
 				<div className={styles.crud__cta}>
-					<button className="button__edit">Cancel</button>
-					<button className="button__primary">Save & Send</button>
+					<button
+						className="button__edit"
+						onClick={() =>
+							pathname === "/invoices"
+								? setNewInvoice && setNewInvoice(false)
+								: setEditInvoice && setEditInvoice(false)
+						}
+					>
+						Cancel
+					</button>
+					<button
+						className="button__primary"
+						onClick={() => {
+							pathname.includes("/invoice-details")
+								? editSubmitRef.current
+									? editSubmitRef.current()
+									: console.log("nill")
+								: formikSubmitRef.current
+								? formikSubmitRef.current()
+								: console.log("nill");
+						}}
+						disabled={submitting}
+					>
+						{submitting ? "Saving" : "Save"}
+					</button>
 				</div>
 			</div>
 		</div>

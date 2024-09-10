@@ -6,7 +6,15 @@ import Image from "next/image";
 import Checkbox from "@/components/shared/Checkbox";
 import { useMediaQuery } from "react-responsive";
 
-const InvoiceFilter = () => {
+interface MyComponentProps {
+	setInvoiceFilter: React.Dispatch<React.SetStateAction<string>>;
+	invoiceFilter: string;
+}
+
+const InvoiceFilter = ({
+	setInvoiceFilter,
+	invoiceFilter,
+}: MyComponentProps) => {
 	const [filterActive, setFilterActive] = useState(false);
 
 	const isMobile = useMediaQuery({
@@ -34,9 +42,21 @@ const InvoiceFilter = () => {
 
 			{filterActive && (
 				<div className={styles.filter__div}>
-					<Checkbox label="Draft" />
-					<Checkbox label="Pending" />
-					<Checkbox label="Paid" />
+					<Checkbox
+						label="All"
+						handleChange={() => setInvoiceFilter("All")}
+						checked={invoiceFilter === "All"}
+					/>
+					<Checkbox
+						label="Pending"
+						handleChange={() => setInvoiceFilter("Pending")}
+						checked={invoiceFilter === "Pending"}
+					/>
+					<Checkbox
+						label="Paid"
+						handleChange={() => setInvoiceFilter("Paid")}
+						checked={invoiceFilter === "Paid"}
+					/>
 				</div>
 			)}
 		</div>

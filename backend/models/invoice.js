@@ -5,24 +5,24 @@ class Item {
 		if (typeof itemName !== "string") {
 			throw new Error("Item name must be a string.");
 		}
-		if (typeof quantity !== "number" || quantity <= 0) {
+		if (typeof Number(quantity) !== "number" || quantity <= 0) {
 			throw new Error("Quantity must be a positive number.");
 		}
-		if (typeof price !== "number" || price < 0) {
+		if (typeof Number(price) !== "number" || price < 0) {
 			throw new Error("Price must be a non-negative number.");
 		}
 
 		this.itemName = itemName;
 		this.quantity = quantity;
 		this.price = price;
-		this.total = this.price * this.quantity;
+		this.total = Number(this.price) * Number(this.quantity);
 	}
 
 	toPlainObject() {
 		return {
 			itemName: this.itemName,
-			quantity: this.quantity,
-			price: this.price,
+			quantity: Number(this.quantity),
+			price: Number(this.price),
 			total: this.total,
 		};
 	}
@@ -45,9 +45,10 @@ class Invoice {
 		dueDate,
 		projectDescription,
 		status,
-		itemList
+		itemList,
+		id
 	) {
-		this.id = generatecustomId();
+		this.id = id ? id : generatecustomId();
 		this.userId = userId;
 		this.streetAddress = streetAddress;
 		this.city = city;
@@ -60,7 +61,7 @@ class Invoice {
 		this.clientPostCode = clientPostCode;
 		this.clientCountry = clientCountry;
 		this.invoiceDate = invoiceDate;
-		this, (dueDate = dueDate);
+		this.dueDate = dueDate;
 		this.projectDescription = projectDescription;
 		this.status = status;
 

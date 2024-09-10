@@ -1,12 +1,12 @@
 import React from "react";
 
 type PillProps = {
-	status: "pending" | "paid";
+	status: "Pending" | "Paid" | undefined;
 };
 
 export const StatusPill = ({ status }: PillProps) => {
 	const dynamicClass =
-		status === "pending" ? "status-pill" : "status-pill paid";
+		status === "Pending" ? "status-pill" : "status-pill paid";
 
 	return (
 		<div className={dynamicClass}>
