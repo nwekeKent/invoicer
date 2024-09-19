@@ -5,6 +5,7 @@ import { InvoiceCrud } from "@/components/invoices/components/invoice-crud/Invoi
 import InvoiceDetails from "@/components/invoices/components/InvoiceDetails";
 import Modal from "@/components/shared/Modal";
 import React, { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 export default function Home() {
 	const [editInvoice, setEditInvoice] = useState(false);
@@ -25,11 +26,13 @@ export default function Home() {
 					setEditInvoice={setEditInvoice}
 				/>
 			)}
-			{deleteInvoice && (
-				<Modal>
-					<DeleteInvoice setDeleteInvoice={setDeleteInvoice} />
-				</Modal>
-			)}
+			<AnimatePresence>
+				{deleteInvoice && (
+					<Modal>
+						<DeleteInvoice setDeleteInvoice={setDeleteInvoice} />
+					</Modal>
+				)}
+			</AnimatePresence>
 		</React.Fragment>
 	);
 }

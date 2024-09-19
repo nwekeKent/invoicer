@@ -7,6 +7,9 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import EditInvoice from "./EditInvoice";
 import axios from "axios";
 import { Toast } from "@/components/shared/Toast";
+import InvoicePdf from "../InvoicePdf";
+import { pdf } from "@react-pdf/renderer";
+import { motion } from "framer-motion";
 
 interface MyComponentProps {
 	setEditInvoice?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,9 +60,19 @@ export const InvoiceCrud = ({
 				icon: "success",
 				title: res.data.message,
 			});
+			const doc = <InvoicePdf invoice={{ ...val, id: res.data.data.id }} />;
+			const pdfBlob = await pdf(doc).toBlob();
+
+			// Create a link to download the PDF
+			const url = URL.createObjectURL(pdfBlob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `invoice ${res.data.data.id}.pdf`;
+			a.click();
 			setCrudAction && setCrudAction(prev => !prev);
 			setNewInvoice && setNewInvoice(false);
 		} catch (err: any) {
+			console.log(err);
 			if (err.status === 401) {
 				Toast.fire({
 					icon: "error",
@@ -99,10 +112,20 @@ export const InvoiceCrud = ({
 				icon: "success",
 				title: res.data.message,
 			});
+			const doc = <InvoicePdf invoice={{ ...val, id: res.data.data.id }} />;
+			const pdfBlob = await pdf(doc).toBlob();
+
+			// Create a link to download the PDF
+			const url = URL.createObjectURL(pdfBlob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `invoice ${res.data.data.id}.pdf`;
+			a.click();
 			setEditInvoice && setEditInvoice(false);
 			setEditAction && setEditAction(prev => !prev);
 		} catch (err: any) {
 			if (err.status === 401) {
+				console.log("err", err);
 				Toast.fire({
 					icon: "error",
 					title: "Session Expired, Please Login",
@@ -120,8 +143,14 @@ export const InvoiceCrud = ({
 	};
 
 	return (
-		<div className={styles.invoice__crud}>
-			<div className={styles.crud__card}>
+		<motion.div className={styles.invoice__crud}>
+			<motion.div
+				className={styles.crud__card}
+				initial={{ x: -500 }}
+				animate={{ x: 0 }}
+				exit={{ x: -700 }}
+				transition={{ duration: 0.3, ease: "easeInOut" }}
+			>
 				{pathname === "/invoices" && (
 					<NewInvoice
 						createInvoice={createInvoice}
@@ -162,7 +191,7 @@ export const InvoiceCrud = ({
 						{submitting ? "Saving" : "Save"}
 					</button>
 				</div>
-			</div>
-		</div>
+			</motion.div>
+		</motion.div>
 	);
 };

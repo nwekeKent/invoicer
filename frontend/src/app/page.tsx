@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Toast } from "@/components/shared/Toast";
+import Loader from "@/components/shared/Loader";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -27,16 +26,7 @@ export default function Home() {
 			}
 		};
 		verifyToken();
-	}, []);
+	}, [router]);
 
-	return (
-		<div className="home-loader">
-			<Image
-				src={"/assets/svg/logo-rectangle.svg"}
-				alt="app-logo"
-				height={80}
-				width={80}
-			/>
-		</div>
-	);
+	return <Loader />;
 }

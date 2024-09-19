@@ -326,33 +326,23 @@
 			border-radius: 8px 8px 0px 0px;
 			background: #f9fafe;
 			padding: 33px;
+			@include flex(flex-start, flex-start, column);
+
+			gap: 32px;
 
 			.breakdown__header {
-				margin-bottom: 32px;
-
 				@include respondMax(sm-mobile) {
 					display: none;
 				}
 			}
 
 			.breakdown__list {
-				margin-bottom: 32px;
-
 				@include respondMax(sm-mobile) {
 					display: none;
 				}
 			}
 
-			.breakdown__list:last-of-type {
-				margin-bottom: 0;
-			}
-
-			.breakdown__list__m:last-of-type {
-				margin-bottom: 0;
-			}
-
 			.breakdown__list__m {
-				margin-bottom: 32px;
 				display: none;
 
 				& > div h1:nth-child(2) {
@@ -369,6 +359,7 @@
 			& > div {
 				@include flex(space-between, center, row nowrap);
 				gap: 50px;
+				width: 100%;
 
 				h1 {
 					flex-shrink: 0;

@@ -4,11 +4,10 @@ import styles from "../Auth.module.scss";
 import Image from "next/image";
 import { Login } from "./Login";
 import { Register } from "./Register";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const Auth = () => {
-	const router = useRouter();
 	const pathname = usePathname();
 
 	return (
@@ -31,7 +30,7 @@ const Auth = () => {
 					<button className="button__edit" type="button">
 						<Link
 							href={
-								pathname === "/auth/login" ? "/auth/login" : "/auth/register"
+								pathname === "/auth/login" ? "/auth/register" : "/auth/login"
 							}
 						>
 							{pathname === "/auth/login" ? "Sign up" : "Login"}

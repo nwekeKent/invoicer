@@ -1,20 +1,6 @@
 import React from "react";
 import styles from "../../Invoices.module.scss";
 import Card from "@/components/shared/Card";
-import { invoices } from "@/data/mock";
-
-const mockItems = [
-	{
-		itemName: "Banner Design",
-		qty: 1,
-		price: 156,
-	},
-	{
-		itemName: "Banner Design",
-		qty: 1,
-		price: 156,
-	},
-];
 
 interface InvoiceProps {
 	invoice: {
@@ -86,7 +72,7 @@ const DetailsCard = ({ invoice }: InvoiceProps) => {
 						</div>
 					</div>
 
-					{invoice.itemList.map((item: any, index: string) => {
+					{invoice.itemList.map((item: any, index: number) => {
 						return (
 							<React.Fragment key={index}>
 								<div className={styles.breakdown__list}>

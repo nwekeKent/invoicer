@@ -8,6 +8,7 @@ import { Toast } from "@/components/shared/Toast";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
+import Loader from "@/components/shared/Loader";
 
 interface MyComponentProps {
 	setEditInvoice: React.Dispatch<React.SetStateAction<boolean>>;
@@ -108,17 +109,7 @@ const InvoiceDetails = ({
 		}
 	};
 
-	if (isFetching)
-		return (
-			<div className="invoice-loader">
-				<Image
-					src={"/assets/svg/logo-rectangle.svg"}
-					alt="app-logo"
-					height={40}
-					width={40}
-				/>
-			</div>
-		);
+	if (isFetching) return <Loader />;
 
 	return (
 		<section className={styles.invoice__details}>

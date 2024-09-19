@@ -65,7 +65,7 @@ body {
 }
 
 .home-loader {
-	height: 100vh;
+	height: 100%;
 	@include flex(center, center, row nowrap);
 }
 

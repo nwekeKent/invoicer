@@ -9,6 +9,8 @@ import axios from "axios";
 import { Toast } from "@/components/shared/Toast";
 import { useRouter } from "next/navigation";
 import InvoicesHeader from "@/components/invoices/InvoicesHeader";
+import Loader from "@/components/shared/Loader";
+import { AnimatePresence } from "framer-motion";
 
 export default function InvoicesPage() {
 	const router = useRouter();
@@ -61,17 +63,7 @@ export default function InvoicesPage() {
 		fetchInvoices();
 	}, [router, crudAction]);
 
-	if (isFetching)
-		return (
-			<div className="invoice-loader">
-				<Image
-					src={"/assets/svg/logo-rectangle.svg"}
-					alt="app-logo"
-					height={40}
-					width={40}
-				/>
-			</div>
-		);
+	if (isFetching) return <Loader />;
 
 	return (
 		<React.Fragment>
@@ -86,12 +78,14 @@ export default function InvoicesPage() {
 			) : (
 				<EmptyInvoice />
 			)}
-			{newInvoice && (
-				<InvoiceCrud
-					setCrudAction={setCrudAction}
-					setNewInvoice={setNewInvoice}
-				/>
-			)}
+			<AnimatePresence>
+				{newInvoice && (
+					<InvoiceCrud
+						setCrudAction={setCrudAction}
+						setNewInvoice={setNewInvoice}
+					/>
+				)}
+			</AnimatePresence>
 			{/* <Modal>
 				<p>testing</p>
 			</Modal> */}
