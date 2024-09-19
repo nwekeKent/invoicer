@@ -5,7 +5,6 @@ import styles from "../Invoices.module.scss";
 import Header from "./invoice-details/Header";
 import DetailsCard from "./invoice-details/DetailsCard";
 import { Toast } from "@/components/shared/Toast";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import Loader from "@/components/shared/Loader";
@@ -85,7 +84,7 @@ const InvoiceDetails = ({
 					},
 				}
 			);
-			console.log("res", res);
+
 			Toast.fire({
 				icon: "success",
 				title: res.data.message,

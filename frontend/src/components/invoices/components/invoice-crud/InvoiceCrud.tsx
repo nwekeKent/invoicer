@@ -39,7 +39,6 @@ export const InvoiceCrud = ({
 	const editSubmitRef = useRef<(() => void) | null>(null);
 
 	const createInvoice = async (val: any) => {
-		console.log("val", val);
 		const token = localStorage.getItem("token");
 		const userString = localStorage.getItem("user");
 		const user: User | null = userString ? JSON.parse(userString) : null;
@@ -55,7 +54,7 @@ export const InvoiceCrud = ({
 					},
 				}
 			);
-			console.log("res", res);
+
 			Toast.fire({
 				icon: "success",
 				title: res.data.message,
@@ -72,7 +71,6 @@ export const InvoiceCrud = ({
 			setCrudAction && setCrudAction(prev => !prev);
 			setNewInvoice && setNewInvoice(false);
 		} catch (err: any) {
-			console.log(err);
 			if (err.status === 401) {
 				Toast.fire({
 					icon: "error",
@@ -91,7 +89,6 @@ export const InvoiceCrud = ({
 	};
 
 	const editInvoice = async (val: any) => {
-		console.log("val", val);
 		const token = localStorage.getItem("token");
 		const userString = localStorage.getItem("user");
 		const user: User | null = userString ? JSON.parse(userString) : null;
@@ -107,7 +104,7 @@ export const InvoiceCrud = ({
 					},
 				}
 			);
-			console.log("res", res);
+
 			Toast.fire({
 				icon: "success",
 				title: res.data.message,
@@ -125,7 +122,6 @@ export const InvoiceCrud = ({
 			setEditAction && setEditAction(prev => !prev);
 		} catch (err: any) {
 			if (err.status === 401) {
-				console.log("err", err);
 				Toast.fire({
 					icon: "error",
 					title: "Session Expired, Please Login",
@@ -179,12 +175,8 @@ export const InvoiceCrud = ({
 						className="button__primary"
 						onClick={() => {
 							pathname.includes("/invoice-details")
-								? editSubmitRef.current
-									? editSubmitRef.current()
-									: console.log("nill")
-								: formikSubmitRef.current
-								? formikSubmitRef.current()
-								: console.log("nill");
+								? editSubmitRef.current && editSubmitRef.current()
+								: formikSubmitRef.current && formikSubmitRef.current();
 						}}
 						disabled={submitting}
 					>

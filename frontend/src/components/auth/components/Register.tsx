@@ -27,20 +27,15 @@ const handleSubmit = async (
 	val: typeof initialValues,
 	{ setSubmitting }: any
 ) => {
-	console.log("val", val);
 	setSubmitting(true);
 	try {
-		const response = await axios.post(
-			"http://localhost:8080/users/register",
-			val
-		);
-		console.log("response", response);
+		await axios.post("http://localhost:8080/users/register", val);
+
 		Toast.fire({
 			icon: "success",
 			title: "Account created successful!",
 		});
 	} catch (err: any) {
-		console.log("err", err);
 		Toast.fire({
 			icon: "error",
 			title: err.response.data.error,

@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
 	const pathname = usePathname();
 
-	console.log("pathname", pathname);
 	return pathname.includes("auth") || pathname === "/" ? (
 		<React.Fragment>{children}</React.Fragment>
 	) : (

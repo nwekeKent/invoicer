@@ -4,7 +4,6 @@ import Invoices from "@/components/invoices/Invoices";
 import EmptyInvoice from "@/components/invoices/components/EmptyInvoice";
 import { InvoiceCrud } from "@/components/invoices/components/invoice-crud/InvoiceCrud";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import axios from "axios";
 import { Toast } from "@/components/shared/Toast";
 import { useRouter } from "next/navigation";

@@ -27,7 +27,7 @@ const DeleteInvoice = ({ setDeleteInvoice }: MyComponentProps) => {
 					},
 				}
 			);
-			console.log("res", res);
+
 			Toast.fire({
 				icon: "success",
 				title: res.data.message,

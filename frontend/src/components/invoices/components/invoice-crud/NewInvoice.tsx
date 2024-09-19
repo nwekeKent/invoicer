@@ -61,7 +61,6 @@ const NewInvoice = ({ createInvoice, formikSubmitRef }: ChildFormProps) => {
 			<Formik
 				initialValues={initialValues}
 				onSubmit={values => {
-					console.log("values", values);
 					createInvoice(values);
 				}}
 				validationSchema={FormSchema}

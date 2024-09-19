@@ -123,7 +123,6 @@ const EditInvoice = ({ editInvoice, editSubmitRef }: ChildFormProps) => {
 			<Formik
 				initialValues={initialValues}
 				onSubmit={values => {
-					console.log("values", values);
 					editInvoice(values);
 				}}
 				validationSchema={FormSchema}

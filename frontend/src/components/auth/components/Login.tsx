@@ -38,7 +38,6 @@ export const Login = () => {
 		val: typeof initialValues,
 		{ setSubmitting }: any
 	) => {
-		console.log("val", val);
 		setSubmitting(true);
 		try {
 			const response = await axios.post(
@@ -51,10 +50,9 @@ export const Login = () => {
 				icon: "success",
 				title: "Login Successful!",
 			});
-			console.log("res", response);
+
 			router.push("/invoices");
 		} catch (err: any) {
-			console.log("err", err);
 			Toast.fire({
 				icon: "error",
 				title: formatMsg(err.response.data.error.code),
