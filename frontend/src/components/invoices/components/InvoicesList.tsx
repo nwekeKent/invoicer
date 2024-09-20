@@ -13,12 +13,25 @@ interface MyComponentProps {
 	invoiceFilter: string;
 }
 
+interface ItemList {
+	price: number;
+	total: number;
+}
+
+interface Item {
+	status: "Pending" | "Paid";
+	id: string;
+	dueDate: string;
+	itemList: ItemList[];
+	clientName: string;
+}
+
 const sumTotal = (items: { total: number }[]) => {
 	return items.reduce((acc, item) => acc + item.total, 0);
 };
 
 const InvoicesList = ({ invoices, invoiceFilter }: MyComponentProps) => {
-	function filterByStatus(arr: any) {
+	function filterByStatus(arr: Item[]) {
 		if (invoiceFilter === "All") {
 			return arr; // Return the original array if status is "All"
 		}

@@ -5,7 +5,6 @@ import styles from "../../Invoices.module.scss";
 import { StatusPill } from "@/components/shared/StatusPill";
 import Image from "next/image";
 import Card from "@/components/shared/Card";
-import { invoices } from "@/data/mock";
 import { useRouter } from "next/navigation";
 
 interface InvoiceProps {
