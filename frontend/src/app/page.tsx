@@ -12,9 +12,12 @@ export default function Home() {
 			const token = localStorage.getItem("token");
 			if (token) {
 				try {
-					const res = await axios.post("http://localhost:8080/check-token", {
-						token: token,
-					});
+					const res = await axios.post(
+						"https://invoicer-backend.vercel.app/check-token",
+						{
+							token: token,
+						}
+					);
 					if (res.status === 200) {
 						router.push("/invoices");
 					}

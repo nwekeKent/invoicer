@@ -15,7 +15,7 @@ const bitter = Bitter({
 	subsets: ["latin"],
 });
 
-axios.defaults.baseURL = "http://localhost:8080";
+axios.defaults.baseURL = "https://invoicer-backend.vercel.app";
 axios.defaults.timeout = 60000;
 
 export default function RootLayout({

@@ -41,7 +41,7 @@ export const Login = () => {
 		setSubmitting(true);
 		try {
 			const response = await axios.post(
-				"http://localhost:8080/users/login",
+				"https://invoicer-backend.vercel.app/users/login",
 				val
 			);
 			localStorage.setItem("token", response.data.token);
