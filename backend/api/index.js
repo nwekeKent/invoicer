@@ -5,9 +5,9 @@ const cors = require("cors");
 
 const bodyParser = require("body-parser");
 const path = require("path");
-const userRoutes = require("./routes/user");
-const invoicesRoutes = require("./routes/invoices");
-const authRoutes = require("./routes/auth");
+const userRoutes = require("../routes/user");
+const invoicesRoutes = require("../routes/invoices");
+const authRoutes = require("../routes/auth");
 
 const app = express();
 app.set("view engine", "pug");
