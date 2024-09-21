@@ -18,9 +18,9 @@ const firebaseConfig = {
 	appId: process.env.FIREBASE_APP_ID,
 };
 
-app = firebase.initializeApp(firebaseConfig);
+const myApp = firebase.initializeApp(firebaseConfig);
 
 const db = admin.firestore();
 const auth = admin.auth();
-const clientAuth = getAuth(app);
+const clientAuth = getAuth(myApp);
 module.exports = { db, auth, clientAuth };
