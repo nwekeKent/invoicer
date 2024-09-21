@@ -14,7 +14,7 @@ app.set("view engine", "pug");
 app.set("views", "views");
 
 const allowedOrigins = [
-	"invoicer-app-azure.vercel.app",
+	"https://invoicer-app-azure.vercel.app",
 	"http://localhost:3000",
 ];
 
