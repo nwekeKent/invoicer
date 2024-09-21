@@ -12,7 +12,26 @@ const authRoutes = require("./routes/auth");
 const app = express();
 app.set("view engine", "pug");
 app.set("views", "views");
-app.use(cors());
+
+const allowedOrigins = [
+	"invoicer-app-azure.vercel.app",
+	"http://localhost:3000",
+];
+
+app.use(
+	cors({
+		origin: function (origin, callback) {
+			// Allow requests with no origin (like mobile apps, curl, etc.)
+			if (!origin) return callback(null, true);
+			if (allowedOrigins.indexOf(origin) === -1) {
+				const msg =
+					"The CORS policy for this site does not allow access from the specified Origin.";
+				return callback(new Error(msg), false);
+			}
+			return callback(null, true);
+		},
+	})
+);
 
 const port = 8080;
 
