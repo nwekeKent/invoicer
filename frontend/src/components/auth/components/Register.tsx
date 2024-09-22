@@ -29,7 +29,10 @@ const handleSubmit = async (
 ) => {
 	setSubmitting(true);
 	try {
-		await axios.post("https://invoicer-backend.vercel.app/users/register", val);
+		await axios.post(
+			"https://invoicer-backend-71r1bjqag-nwekekents-projects.vercel.app/users/register",
+			val
+		);
 
 		Toast.fire({
 			icon: "success",

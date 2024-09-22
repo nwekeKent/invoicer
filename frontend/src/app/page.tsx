@@ -13,7 +13,7 @@ export default function Home() {
 			if (token) {
 				try {
 					const res = await axios.post(
-						"https://invoicer-backend.vercel.app/check-token",
+						"https://invoicer-backend-71r1bjqag-nwekekents-projects.vercel.app/check-token",
 						{
 							token: token,
 						}
