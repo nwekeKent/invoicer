@@ -20,7 +20,7 @@ const DeleteInvoice = ({ setDeleteInvoice }: MyComponentProps) => {
 		setSubmitting(true);
 		try {
 			const res = await axios.delete(
-				`https://invoicer-backend-71r1bjqag-nwekekents-projects.vercel.app/invoices/${invoiceId}/delete`,
+				`https://invoicer-backend-ofbtr366z-nwekekents-projects.vercel.app/invoices/${invoiceId}/delete`,
 				{
 					headers: {
 						authorization: `Bearer ${token}`,
