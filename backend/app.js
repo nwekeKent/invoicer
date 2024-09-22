@@ -16,6 +16,7 @@ app.set("views", "views");
 const allowedOrigins = [
 	"https://invoicer-app-azure.vercel.app",
 	"http://localhost:3000",
+	"http://localhost:8000",
 ];
 
 app.use(
