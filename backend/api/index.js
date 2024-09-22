@@ -34,8 +34,12 @@ app.use(
 			}
 			return callback(null, true);
 		},
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		credentials: true,
 	})
 );
+
+app.options("*", cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

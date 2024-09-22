@@ -31,8 +31,12 @@ app.use(
 			}
 			return callback(null, true);
 		},
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		credentials: true,
 	})
 );
+
+app.options("*", cors());
 
 const port = 8080;
 
