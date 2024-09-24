@@ -13,29 +13,14 @@ const app = express();
 app.set("view engine", "pug");
 app.set("views", "views");
 
-const allowedOrigins = [
-	"https://invoicer-app-azure.vercel.app",
-	"http://localhost:3000",
-	"http://localhost:8000",
-];
-
 app.use(
 	cors({
-		origin: function (origin, callback) {
-			// Allow requests with no origin, like mobile apps or curl
-			if (!origin) return callback(null, true);
-			if (allowedOrigins.indexOf(origin) === -1) {
-				const msg = `CORS policy does not allow access from ${origin}`;
-				return callback(new Error(msg), false);
-			}
-			return callback(null, true);
-		},
-		methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-		credentials: true, // Allow sending cookies or authorization headers
+		origin: "*", // Allow all origins
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		credentials: true,
 	})
 );
 
-// Handle Preflight (OPTIONS) requests for CORS
 app.options("*", cors());
 
 const port = 8080;

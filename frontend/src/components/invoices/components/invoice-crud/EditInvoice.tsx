@@ -75,7 +75,7 @@ const EditInvoice = ({ editInvoice, editSubmitRef }: ChildFormProps) => {
 
 			try {
 				const response = await axios.get(
-					`https://invoicer-ayj4ll2cs-nwekekents-projects.vercel.app/invoices/${id}`,
+					`https://invoicer-lk242pkyy-nwekekents-projects.vercel.app/invoices/${id}`,
 					{
 						headers: {
 							authorization: `Bearer ${token}`,
