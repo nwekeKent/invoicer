@@ -22,20 +22,20 @@ const allowedOrigins = [
 app.use(
 	cors({
 		origin: function (origin, callback) {
-			// Allow requests with no origin (like mobile apps, curl, etc.)
+			// Allow requests with no origin, like mobile apps or curl
 			if (!origin) return callback(null, true);
 			if (allowedOrigins.indexOf(origin) === -1) {
-				const msg =
-					"The CORS policy for this site does not allow access from the specified Origin.";
+				const msg = `CORS policy does not allow access from ${origin}`;
 				return callback(new Error(msg), false);
 			}
 			return callback(null, true);
 		},
-		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-		credentials: true,
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+		credentials: true, // Allow sending cookies or authorization headers
 	})
 );
 
+// Handle Preflight (OPTIONS) requests for CORS
 app.options("*", cors());
 
 const port = 8080;
