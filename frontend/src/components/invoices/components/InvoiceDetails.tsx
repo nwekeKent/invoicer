@@ -40,7 +40,7 @@ const InvoiceDetails = ({
 
 			try {
 				const response = await axios.get(
-					`https://invoicer-backend-gii7vioyp-nwekekents-projects.vercel.app/invoices/${id}`,
+					`https://invoicer-fgdcs63tx-nwekekents-projects.vercel.app/invoices/${id}`,
 					{
 						headers: {
 							authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ const InvoiceDetails = ({
 		setSubmitting(true);
 		try {
 			const res = await axios.patch(
-				`https://invoicer-backend-gii7vioyp-nwekekents-projects.vercel.app/invoices/${id}/status`,
+				`https://invoicer-fgdcs63tx-nwekekents-projects.vercel.app/invoices/${id}/status`,
 				{ status: "Paid" },
 				{
 					headers: {
