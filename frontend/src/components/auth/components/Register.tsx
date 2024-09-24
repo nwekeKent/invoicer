@@ -30,7 +30,7 @@ const handleSubmit = async (
 	setSubmitting(true);
 	try {
 		await axios.post(
-			"https://invoicer-fgdcs63tx-nwekekents-projects.vercel.app/users/register",
+			"https://invoicer-ayj4ll2cs-nwekekents-projects.vercel.app/users/register",
 			val
 		);
 

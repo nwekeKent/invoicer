@@ -46,7 +46,7 @@ export const InvoiceCrud = ({
 		setSubmitting(true);
 		try {
 			const res = await axios.post(
-				`https://invoicer-fgdcs63tx-nwekekents-projects.vercel.app/${id}/invoices`,
+				`https://invoicer-ayj4ll2cs-nwekekents-projects.vercel.app/${id}/invoices`,
 				val,
 				{
 					headers: {
@@ -96,7 +96,7 @@ export const InvoiceCrud = ({
 		setSubmitting(true);
 		try {
 			const res = await axios.put(
-				`https://invoicer-fgdcs63tx-nwekekents-projects.vercel.app/${id}/invoices/${invoiceId}`,
+				`https://invoicer-ayj4ll2cs-nwekekents-projects.vercel.app/${id}/invoices/${invoiceId}`,
 				val,
 				{
 					headers: {
