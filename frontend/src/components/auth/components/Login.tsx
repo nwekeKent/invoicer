@@ -41,7 +41,7 @@ export const Login = () => {
 		setSubmitting(true);
 		try {
 			const response = await axios.post(
-				"https://invoicer-lk242pkyy-nwekekents-projects.vercel.app/users/login",
+				"https://invoicer-mhga.onrender.com/users/login",
 				val
 			);
 			localStorage.setItem("token", response.data.token);

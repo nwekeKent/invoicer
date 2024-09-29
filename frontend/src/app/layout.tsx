@@ -15,8 +15,7 @@ const bitter = Bitter({
 	subsets: ["latin"],
 });
 
-axios.defaults.baseURL =
-	"https://invoicer-lk242pkyy-nwekekents-projects.vercel.app";
+axios.defaults.baseURL = "https://invoicer-mhga.onrender.com";
 axios.defaults.timeout = 60000;
 
 export default function RootLayout({

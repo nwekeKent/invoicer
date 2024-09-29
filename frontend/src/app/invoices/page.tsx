@@ -32,7 +32,7 @@ export default function InvoicesPage() {
 			const id = user ? user.uid : "";
 			try {
 				const response = await axios.get(
-					`https://invoicer-lk242pkyy-nwekekents-projects.vercel.app/${id}/invoices`,
+					`https://invoicer-mhga.onrender.com/${id}/invoices`,
 					{
 						headers: {
 							authorization: `Bearer ${token}`,
