@@ -1,5 +1,13 @@
+const admin = require("firebase-admin");
 const firebase = require("firebase/app");
 const { getAuth } = require("firebase/auth");
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: process.env.FIREBASE_DATABASE_URL,
+});
 
 const firebaseConfig = {
 	apiKey: process.env.FIREBASE_API_KEY,
@@ -13,7 +21,7 @@ const firebaseConfig = {
 
 const myApp = firebase.initializeApp(firebaseConfig);
 
-const db = myApp.firestore();
-const auth = myApp.auth();
+const db = admin.firestore();
+const auth = admin.auth();
 const clientAuth = getAuth(myApp);
 module.exports = { db, auth, clientAuth };
