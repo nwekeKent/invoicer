@@ -267,7 +267,7 @@ const EditInvoice = ({ editInvoice, editSubmitRef }: ChildFormProps) => {
 														<Field
 															placeholder=""
 															label="Qty"
-															type="number"
+															type="text"
 															name={`itemList.${index}.quantity`}
 															component={Input}
 														/>

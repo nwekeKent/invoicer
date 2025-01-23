@@ -1,20 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "../Invoices.module.scss";
 import Image from "next/image";
 import Checkbox from "@/components/shared/Checkbox";
+import styles from "../Invoices.module.scss";
+import { useInvoice } from "@/context/InvoiceContext";
 import { useMediaQuery } from "react-responsive";
 
-interface MyComponentProps {
-	setInvoiceFilter: React.Dispatch<React.SetStateAction<string>>;
-	invoiceFilter: string;
-}
-
-const InvoiceFilter = ({
-	setInvoiceFilter,
-	invoiceFilter,
-}: MyComponentProps) => {
+const InvoiceFilter = () => {
+	const { setInvoiceFilter, invoiceFilter } = useInvoice();
 	const [filterActive, setFilterActive] = useState(false);
 
 	const isMobile = useMediaQuery({

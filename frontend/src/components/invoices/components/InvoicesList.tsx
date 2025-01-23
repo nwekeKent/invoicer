@@ -7,6 +7,7 @@ import styles from "../Invoices.module.scss";
 import { StatusPill } from "@/components/shared/StatusPill";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useInvoice } from "@/context/InvoiceContext";
 
 interface MyComponentProps {
 	invoices: any;
@@ -30,13 +31,14 @@ const sumTotal = (items: { total: number }[]) => {
 	return items.reduce((acc, item) => acc + item.total, 0);
 };
 
-const InvoicesList = ({ invoices, invoiceFilter }: MyComponentProps) => {
+const InvoicesList = () => {
+	const { invoices, invoiceFilter } = useInvoice();
+
 	function filterByStatus(arr: Item[]) {
 		if (invoiceFilter === "All") {
-			return arr; // Return the original array if status is "All"
+			return arr;
 		}
-
-		return arr.filter(item => item.status === invoiceFilter); // Filter based on status
+		return arr.filter(item => item.status === invoiceFilter);
 	}
 
 	const router = useRouter();

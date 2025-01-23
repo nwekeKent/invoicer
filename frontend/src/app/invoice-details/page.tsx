@@ -4,32 +4,22 @@ import DeleteInvoice from "@/components/invoices/components/invoice-crud/DeleteI
 import { InvoiceCrud } from "@/components/invoices/components/invoice-crud/InvoiceCrud";
 import InvoiceDetails from "@/components/invoices/components/InvoiceDetails";
 import Modal from "@/components/shared/Modal";
-import React, { useState } from "react";
+import React from "react";
 import { AnimatePresence } from "framer-motion";
+import { useInvoice } from "@/context/InvoiceContext";
 
 export default function Home() {
-	const [editInvoice, setEditInvoice] = useState(false);
-	const [deleteInvoice, setDeleteInvoice] = useState(false);
-	const [editAction, setEditAction] = useState(false);
+	const { isEditInvoiceOpen, isDeleteModalOpen, setIsDeleteModalOpen } =
+		useInvoice();
 
 	return (
 		<React.Fragment>
-			<InvoiceDetails
-				setEditInvoice={setEditInvoice}
-				setDeleteInvoice={setDeleteInvoice}
-				editAction={editAction}
-				setEditAction={setEditAction}
-			/>
-			{editInvoice && (
-				<InvoiceCrud
-					setEditAction={setEditAction}
-					setEditInvoice={setEditInvoice}
-				/>
-			)}
+			<InvoiceDetails />
+			{isEditInvoiceOpen && <InvoiceCrud />}
 			<AnimatePresence>
-				{deleteInvoice && (
+				{isDeleteModalOpen && (
 					<Modal>
-						<DeleteInvoice setDeleteInvoice={setDeleteInvoice} />
+						<DeleteInvoice />
 					</Modal>
 				)}
 			</AnimatePresence>

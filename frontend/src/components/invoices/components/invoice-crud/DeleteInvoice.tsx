@@ -4,18 +4,17 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Toast } from "@/components/shared/Toast";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useInvoice } from "@/context/InvoiceContext";
 
-interface MyComponentProps {
-	setDeleteInvoice: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const DeleteInvoice = ({ setDeleteInvoice }: MyComponentProps) => {
+const DeleteInvoice = () => {
 	const router = useRouter();
 	const idParams = useSearchParams();
 	const invoiceId = idParams.get("id");
 	const [submitting, setSubmitting] = useState(false);
+	const { setIsDeleteModalOpen, setCrudAction, crudAction } = useInvoice();
 
-	const deleteInvoice = async () => {
+	const handleCancel = () => setIsDeleteModalOpen(false);
+	const handleDelete = async () => {
 		const token = localStorage.getItem("token");
 		setSubmitting(true);
 		try {
@@ -33,6 +32,8 @@ const DeleteInvoice = ({ setDeleteInvoice }: MyComponentProps) => {
 				title: res.data.message,
 			});
 			router.push("/invoices");
+			setCrudAction(!crudAction);
+			setIsDeleteModalOpen(false);
 		} catch (err: any) {
 			if (err.status === 401) {
 				Toast.fire({
@@ -60,13 +61,10 @@ const DeleteInvoice = ({ setDeleteInvoice }: MyComponentProps) => {
 			</p>
 
 			<div className="delete__cta">
-				<button
-					className="button__edit"
-					onClick={() => setDeleteInvoice(false)}
-				>
+				<button className="button__edit" onClick={handleCancel}>
 					Cancel
 				</button>
-				<button className="button__delete" onClick={deleteInvoice}>
+				<button className="button__delete" onClick={handleDelete}>
 					{submitting ? "Deleting..." : "Delete"}
 				</button>
 			</div>

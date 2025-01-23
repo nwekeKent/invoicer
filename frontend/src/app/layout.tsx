@@ -4,6 +4,7 @@ import Providers from "./providers";
 import { AppLayout } from "@/components/layout/AppLayout";
 import axios from "axios";
 import { Bitter } from "@next/font/google";
+import { InvoiceProvider } from "@/context/InvoiceContext";
 
 export const metadata: Metadata = {
 	title: "Invoicer",
@@ -27,7 +28,9 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning={true}>
 			<body suppressHydrationWarning className={bitter.className}>
 				<Providers>
-					<AppLayout>{children}</AppLayout>
+					<InvoiceProvider>
+						<AppLayout>{children}</AppLayout>
+					</InvoiceProvider>
 				</Providers>
 			</body>
 		</html>

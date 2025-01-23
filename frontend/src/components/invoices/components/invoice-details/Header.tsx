@@ -7,10 +7,10 @@ import Image from "next/image";
 import Card from "@/components/shared/Card";
 import { useRouter } from "next/navigation";
 
-interface InvoiceProps {
-	invoiceStatus?: "Pending" | "Paid" | undefined;
-	setEditInvoice: React.Dispatch<React.SetStateAction<boolean>>;
-	setDeleteInvoice: React.Dispatch<React.SetStateAction<boolean>>;
+interface HeaderProps {
+	invoiceStatus?: "Pending" | "Paid";
+	setEditInvoice: (isOpen: boolean) => void;
+	setDeleteInvoice: (isOpen: boolean) => void;
 	submitting: boolean;
 	markAsPaid: () => void;
 }
@@ -21,7 +21,7 @@ const Header = ({
 	setDeleteInvoice,
 	submitting,
 	markAsPaid,
-}: InvoiceProps) => {
+}: HeaderProps) => {
 	const router = useRouter();
 	return (
 		<div>

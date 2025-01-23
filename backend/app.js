@@ -15,7 +15,7 @@ app.set("views", "views");
 
 app.use(
 	cors({
-		origin: "*", // Allow all origins
+		origin: "*", // Too permissive
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 		credentials: true,
 	})

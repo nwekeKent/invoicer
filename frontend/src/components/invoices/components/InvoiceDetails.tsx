@@ -8,25 +8,20 @@ import { Toast } from "@/components/shared/Toast";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import Loader from "@/components/shared/Loader";
-
-interface MyComponentProps {
-	setEditInvoice: React.Dispatch<React.SetStateAction<boolean>>;
-	setDeleteInvoice: React.Dispatch<React.SetStateAction<boolean>>;
-	setEditAction: React.Dispatch<React.SetStateAction<boolean>>;
-	editAction: boolean;
-}
+import { useInvoice } from "@/context/InvoiceContext";
 
 interface InvoiceProps {
 	status?: "Pending" | "Paid" | undefined;
 	id?: string;
 }
 
-const InvoiceDetails = ({
-	setEditInvoice,
-	setDeleteInvoice,
-	editAction,
-	setEditAction,
-}: MyComponentProps) => {
+const InvoiceDetails = () => {
+	const {
+		setIsEditInvoiceOpen,
+		setIsDeleteModalOpen,
+		crudAction,
+		setCrudAction,
+	} = useInvoice();
 	const [invoice, setInvoice] = useState<InvoiceProps>({});
 	const [submitting, setSubmitting] = useState(false);
 	const [isFetching, setisFetching] = useState(true);
@@ -68,7 +63,7 @@ const InvoiceDetails = ({
 			}
 		};
 		fetchInvoice();
-	}, [id, router, editAction]);
+	}, [id, router, crudAction]);
 
 	const markAsPaid = async () => {
 		const token = localStorage.getItem("token");
@@ -89,7 +84,7 @@ const InvoiceDetails = ({
 				icon: "success",
 				title: res.data.message,
 			});
-			setEditAction && setEditAction(prev => !prev);
+			setCrudAction(!crudAction);
 		} catch (err: any) {
 			if (err.status === 401) {
 				Toast.fire({
@@ -114,23 +109,16 @@ const InvoiceDetails = ({
 		<section className={styles.invoice__details}>
 			<Header
 				invoiceStatus={invoice.status}
-				setEditInvoice={setEditInvoice}
-				setDeleteInvoice={setDeleteInvoice}
+				setEditInvoice={setIsEditInvoiceOpen}
+				setDeleteInvoice={setIsDeleteModalOpen}
 				submitting={submitting}
 				markAsPaid={markAsPaid}
 			/>
 			<DetailsCard invoice={invoice} />
 
 			<div className={styles.header__cta}>
-				<button className="button__edit" onClick={() => setEditInvoice(true)}>
-					Edit
-				</button>
-				<button
-					className="button__delete"
-					onClick={() => setDeleteInvoice(true)}
-				>
-					Delete
-				</button>
+				<button onClick={() => setIsEditInvoiceOpen(true)}>Edit</button>
+				<button onClick={() => setIsDeleteModalOpen(true)}>Delete</button>
 
 				{invoice.status !== "Paid" && (
 					<button className="button__primary" onClick={markAsPaid}>

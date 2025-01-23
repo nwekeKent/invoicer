@@ -10,25 +10,19 @@ import { Toast } from "@/components/shared/Toast";
 import InvoicePdf from "../InvoicePdf";
 import { pdf } from "@react-pdf/renderer";
 import { motion } from "framer-motion";
-
-interface MyComponentProps {
-	setEditInvoice?: React.Dispatch<React.SetStateAction<boolean>>;
-	setNewInvoice?: React.Dispatch<React.SetStateAction<boolean>>;
-	setCrudAction?: React.Dispatch<React.SetStateAction<boolean>>;
-	setEditAction?: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { useInvoice } from "@/context/InvoiceContext";
 
 interface User {
 	uid: string;
-	// Other properties can be added here
 }
 
-export const InvoiceCrud = ({
-	setNewInvoice,
-	setEditInvoice,
-	setCrudAction,
-	setEditAction,
-}: MyComponentProps) => {
+export const InvoiceCrud = () => {
+	const {
+		setIsNewInvoiceOpen,
+		setIsEditInvoiceOpen,
+		setCrudAction,
+		crudAction,
+	} = useInvoice();
 	const pathname = usePathname();
 	const router = useRouter();
 	const idParams = useSearchParams();
@@ -37,6 +31,11 @@ export const InvoiceCrud = ({
 
 	const formikSubmitRef = useRef<(() => void) | null>(null);
 	const editSubmitRef = useRef<(() => void) | null>(null);
+
+	const handleClose = () => {
+		setIsNewInvoiceOpen(false);
+		setIsEditInvoiceOpen(false);
+	};
 
 	const createInvoice = async (val: any) => {
 		const token = localStorage.getItem("token");
@@ -68,8 +67,8 @@ export const InvoiceCrud = ({
 			a.href = url;
 			a.download = `invoice ${res.data.data.id}.pdf`;
 			a.click();
-			setCrudAction && setCrudAction(prev => !prev);
-			setNewInvoice && setNewInvoice(false);
+			setCrudAction(!crudAction);
+			setIsNewInvoiceOpen(false);
 		} catch (err: any) {
 			if (err.status === 401) {
 				Toast.fire({
@@ -109,17 +108,17 @@ export const InvoiceCrud = ({
 				icon: "success",
 				title: res.data.message,
 			});
-			const doc = <InvoicePdf invoice={{ ...val, id: res.data.data.id }} />;
+			const doc = <InvoicePdf invoice={{ ...val, id: invoiceId }} />;
 			const pdfBlob = await pdf(doc).toBlob();
 
 			// Create a link to download the PDF
 			const url = URL.createObjectURL(pdfBlob);
 			const a = document.createElement("a");
 			a.href = url;
-			a.download = `invoice ${res.data.data.id}.pdf`;
+			a.download = `invoice ${invoiceId}.pdf`;
 			a.click();
-			setEditInvoice && setEditInvoice(false);
-			setEditAction && setEditAction(prev => !prev);
+			setIsEditInvoiceOpen(false);
+			setCrudAction(!crudAction);
 		} catch (err: any) {
 			if (err.status === 401) {
 				Toast.fire({
@@ -161,14 +160,7 @@ export const InvoiceCrud = ({
 				)}
 
 				<div className={styles.crud__cta}>
-					<button
-						className="button__edit"
-						onClick={() =>
-							pathname === "/invoices"
-								? setNewInvoice && setNewInvoice(false)
-								: setEditInvoice && setEditInvoice(false)
-						}
-					>
+					<button className="button__edit" onClick={handleClose}>
 						Cancel
 					</button>
 					<button
