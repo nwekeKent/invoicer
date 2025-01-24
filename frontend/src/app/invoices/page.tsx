@@ -14,14 +14,7 @@ import { useInvoice } from "@/context/InvoiceContext";
 
 export default function InvoicesPage() {
 	const router = useRouter();
-	const {
-		invoices,
-		setInvoices,
-		invoiceFilter,
-		isNewInvoiceOpen,
-		setIsNewInvoiceOpen,
-		crudAction,
-	} = useInvoice();
+	const { invoices, setInvoices, isNewInvoiceOpen, crudAction } = useInvoice();
 	const [isFetching, setIsFetching] = useState(true);
 
 	useEffect(() => {

@@ -9,11 +9,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useInvoice } from "@/context/InvoiceContext";
 
-interface MyComponentProps {
-	invoices: any;
-	invoiceFilter: string;
-}
-
 interface ItemList {
 	price: number;
 	total: number;

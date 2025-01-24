@@ -9,8 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import { useInvoice } from "@/context/InvoiceContext";
 
 export default function Home() {
-	const { isEditInvoiceOpen, isDeleteModalOpen, setIsDeleteModalOpen } =
-		useInvoice();
+	const { isEditInvoiceOpen, isDeleteModalOpen } = useInvoice();
 
 	return (
 		<React.Fragment>
