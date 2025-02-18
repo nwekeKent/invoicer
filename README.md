@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Invoicer - Professional Invoice Management System
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Invoicer is a full-stack web application that helps freelancers and businesses create, manage, and track invoices efficiently. Built with Next.js, TypeScript, and Express, it provides a modern, responsive interface for professional invoice management.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun run dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Invoice Management
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Create Invoices**: Generate professional invoices with customizable fields
+- **Edit & Update**: Modify existing invoices as needed
+- **Delete**: Remove unwanted invoices from the system
+- **Status Tracking**: Track invoice status (Paid/Pending)
+- **PDF Generation**: Automatically generate downloadable PDF invoices
+- **Filter System**: Sort and filter invoices by status
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### User Interface
 
-## Learn More
+- **Responsive Design**: Works seamlessly across desktop and mobile devices
+- **Dark/Light Mode**: Toggle between dark and light themes
+- **Modern UI**: Clean, professional interface with smooth animations
+- **Real-time Updates**: Changes reflect immediately across the interface
 
-To learn more about Next.js, take a look at the following resources:
+### Security
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Authentication**: Secure user authentication system
+- **Protected Routes**: Authenticated access to invoice management
+- **JWT Tokens**: Secure API communication using JSON Web Tokens
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Technical Stack
 
-## Deploy on Vercel
+### Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js 13+ with App Router
+- TypeScript
+- Framer Motion for animations
+- SCSS for styling
+- Context API for state management
+- Axios for API communication
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Backend
+
+- Express.js
+- Firebase Realtime database for database
+- JWT for authentication
+- CORS enabled
+- RESTful API architecture
+
+## API Endpoints
+
+### Authentication
+
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
+
+### Invoices
+
+- `GET /invoices` - Fetch all invoices
+- `POST /invoices` - Create new invoice
+- `PUT /invoices/:id` - Update invoice
+- `DELETE /invoices/:id` - Delete invoice
+- `PATCH /invoices/:id/status` - Update invoice status
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
