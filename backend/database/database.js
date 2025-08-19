@@ -1,8 +1,25 @@
+require("dotenv").config();
+
 const admin = require("firebase-admin");
 const firebase = require("firebase/app");
 const { getAuth } = require("firebase/auth");
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+const base64ServiceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+
+if (!base64ServiceAccount) {
+	throw new Error(
+		"FIREBASE_SERVICE_ACCOUNT_KEY_BASE64 is not set in environment variables."
+	);
+}
+
+// 2. Decode the Base64 string back into a JSON string
+const serviceAccountJsonString = Buffer.from(
+	base64ServiceAccount,
+	"base64"
+).toString("utf-8");
+
+// 3. Parse the JSON string into an object
+const serviceAccount = JSON.parse(serviceAccountJsonString);
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),

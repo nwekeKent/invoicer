@@ -1,39 +1,47 @@
 const express = require("express");
 const router = express.Router();
-const verifyToken = require("../middlewares/verifyToken");
+const verifyTokenMiddleware = require("../middlewares/authMiddleware");
 const invoicesController = require("../controllers/invoicesController");
 
 // Create a new user
-router.post("/:userId/invoices", verifyToken, invoicesController.createInvoice);
+router.post(
+	"/:userId/invoices",
+	verifyTokenMiddleware,
+	invoicesController.createInvoice
+);
 
 // Get all user Invoices
 router.get(
 	"/:userId/invoices",
-	verifyToken,
+	verifyTokenMiddleware,
 	invoicesController.getUserInvoices
 );
 
 //get single invoice by id
-router.get("/invoices/:id", verifyToken, invoicesController.getInvoiceById);
+router.get(
+	"/invoices/:id",
+	verifyTokenMiddleware,
+	invoicesController.getInvoiceById
+);
 
 // edit single invoice
 router.put(
 	"/:userId/invoices/:id",
-	verifyToken,
+	verifyTokenMiddleware,
 	invoicesController.updateInvoice
 );
 
 // mark invoice as paid
 router.patch(
 	"/invoices/:id/status",
-	verifyToken,
+	verifyTokenMiddleware,
 	invoicesController.markAsPaid
 );
 
 //delete single invoice
 router.delete(
 	"/invoices/:id/delete",
-	verifyToken,
+	verifyTokenMiddleware,
 	invoicesController.deleteInvoice
 );
 module.exports = router;

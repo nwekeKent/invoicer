@@ -1,3 +1,4 @@
+require("express-async-errors");
 require("dotenv").config();
 
 const express = require("express");
@@ -8,6 +9,7 @@ const path = require("path");
 const userRoutes = require("./routes/user");
 const invoicesRoutes = require("./routes/invoices");
 const authRoutes = require("./routes/auth");
+const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 app.set("view engine", "pug");
@@ -37,6 +39,10 @@ app.get("/", (req, res) => {
 	res.send("Hello, World!");
 });
 
-app.listen(port, () => {});
+app.use(errorHandler);
+
+app.listen(port, () => {
+	console.log(`Example app listening on port ${port}`);
+});
 
 module.exports = app;

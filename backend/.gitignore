@@ -18,6 +18,7 @@ benchmarks/graphs
 # environment variables
 .env
 .env.local
+converter.js
 
 #secretAccont
 

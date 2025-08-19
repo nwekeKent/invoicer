@@ -10,14 +10,14 @@ export default function Home() {
 	useEffect(() => {
 		const verifyToken = async () => {
 			const token = localStorage.getItem("token");
+
+			const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 			if (token) {
 				try {
-					const res = await axios.post(
-						"https://invoicer-mhga.onrender.com/check-token",
-						{
-							token: token,
-						}
-					);
+					const res = await axios.post(`${apiUrl}/auth/verify-token`, {
+						token: token,
+					});
 					if (res.status === 200) {
 						router.push("/invoices");
 					}
