@@ -42,7 +42,7 @@ exports.createInvoice = async (req, res) => {
 
 exports.getUserInvoices = async (req, res) => {
 	// Get userId from the authenticated user's request object
-	const userId = req.auth.uid; // ASSUMPTION: req.auth.uid is available
+	const userId = req.auth.uid;
 
 	await UserService.getUserById(userId);
 

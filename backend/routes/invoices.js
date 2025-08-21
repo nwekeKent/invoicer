@@ -3,16 +3,16 @@ const router = express.Router();
 const verifyTokenMiddleware = require("../middlewares/authMiddleware");
 const invoicesController = require("../controllers/invoicesController");
 
-// Create a new user
+// Create a new Invoice
 router.post(
-	"/:userId/invoices",
+	"/invoices",
 	verifyTokenMiddleware,
 	invoicesController.createInvoice
 );
 
 // Get all user Invoices
 router.get(
-	"/:userId/invoices",
+	"/invoices",
 	verifyTokenMiddleware,
 	invoicesController.getUserInvoices
 );
@@ -26,7 +26,7 @@ router.get(
 
 // edit single invoice
 router.put(
-	"/:userId/invoices/:id",
+	"/invoices/:id",
 	verifyTokenMiddleware,
 	invoicesController.updateInvoice
 );
