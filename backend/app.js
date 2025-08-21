@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", userRoutes);
 app.use(invoicesRoutes);
-app.use(authRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
 	res.send("Hello, World!");

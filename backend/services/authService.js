@@ -1,9 +1,7 @@
-// services/authService.js
-
 const { auth, clientAuth } = require("../database/database");
 const { signInWithEmailAndPassword } = require("firebase/auth");
 const UserService = require("./userService");
-// 1. Import your custom error classes
+
 const {
 	BadRequestError,
 	UnauthorizedError,
@@ -31,17 +29,15 @@ class AuthService {
 			return {
 				token: idToken,
 				user: {
-					uid: userCredential.user.uid,
+					id: userCredential.user.uid,
 					email: userCredential.user.email,
-					displayName: userCredential.user.displayName,
+					name: userCredential.user.displayName,
 				},
 			};
 		} catch (error) {
-			// 2. Translate Firebase errors into your custom, operational errors.
 			if (error.code === "auth/invalid-credential") {
 				throw new UnauthorizedError("Invalid email or password.");
 			}
-			// For other potential errors, throw a generic bad request or re-throw
 			throw new BadRequestError(error.message || "Login failed.");
 		}
 	}
@@ -67,21 +63,32 @@ class AuthService {
 
 			// Step 2: Create the user profile in Firestore using the UserService
 			const userProfileData = {
-				uid: newUserRecord.uid,
+				id: newUserRecord.uid,
 				name,
 				email,
 				companyName,
 			};
 			const userProfile = await UserService.createUserProfile(userProfileData);
 
-			return userProfile;
+			// Step 3: Sign in the user to get a token
+			const signInResult = await signInWithEmailAndPassword(
+				clientAuth,
+				email,
+				password
+			);
+			const idToken = await signInResult.user.getIdToken();
+
+			// Step 4: Return token + profile info
+			return {
+				token: idToken,
+				user: userProfile,
+			};
 		} catch (error) {
-			// Cleanup: If profile creation fails, delete the auth user to prevent orphans
+			// Cleanup: delete auth user to avoid orphaned records
 			if (newUserRecord) {
 				await auth.deleteUser(newUserRecord.uid);
 			}
 
-			// 3. Translate specific Firebase errors into your custom errors.
 			if (error.code === "auth/email-already-exists") {
 				throw new ConflictError("An account with this email already exists.");
 			}
@@ -89,11 +96,9 @@ class AuthService {
 				error.code === "auth/invalid-password" ||
 				error.code === "auth/invalid-email"
 			) {
-				// Pass the specific message from Firebase for more detail
 				throw new BadRequestError(error.message);
 			}
 
-			// For any other error (e.g., from profile creation), throw a generic bad request
 			throw new BadRequestError(error.message || "Failed to register user.");
 		}
 	}

@@ -1,5 +1,3 @@
-// services/userService.js
-
 const { db, auth } = require("../database/database");
 const User = require("../models/user");
 const { NotFoundError } = require("../utils/apiErrors");
@@ -11,8 +9,8 @@ class UserService {
 	 * @returns {Promise<User>} - The created user object.
 	 */
 	static async createUserProfile(profileData) {
-		const { uid, name, email, companyName } = profileData;
-		const user = new User(uid, name, email, companyName);
+		const { id, name, email, companyName } = profileData;
+		const user = new User(id, name, email, companyName);
 		await db.collection("users").doc(user.id).set(user.toFirestore());
 		return user;
 	}
@@ -25,7 +23,6 @@ class UserService {
 	static async getUserById(userId) {
 		const userDoc = await db.collection("users").doc(userId).get();
 		if (!userDoc.exists) {
-			// Throw an error that the controller can catch to send a 404
 			throw new NotFoundError("User with that ID was not found.");
 		}
 		return User.fromFirestore(userDoc);
@@ -70,7 +67,6 @@ class UserService {
 			throw new NotFoundError("User with that ID was not found.");
 		}
 
-		// It's often safer to delete from Auth first, or handle potential failures
 		await auth.deleteUser(userId);
 		await userRef.delete();
 	}
