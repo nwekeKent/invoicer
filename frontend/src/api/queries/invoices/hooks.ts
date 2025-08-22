@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { getInvoice, getInvoices } from "./request";
-import { InvoiceData } from "./response";
+import { InvoiceData } from "@/types";
 import { invoiceQueryKeys } from "./keys";
 
 export const useInvoices = () => {

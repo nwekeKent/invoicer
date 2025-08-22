@@ -1,12 +1,12 @@
 import axiosInstance from "@/lib/axios-instance";
-import { auth } from "./endpoint";
+import { endpoints } from "./endpoint";
 import { LoginPayload, RegisterPayload, AuthResponse } from "@/api";
 
 export const login = async ({
 	email,
 	password,
 }: LoginPayload): Promise<AuthResponse> => {
-	const response = await axiosInstance.post<AuthResponse>(auth.login, {
+	const response = await axiosInstance.post<AuthResponse>(endpoints.login, {
 		email,
 		password,
 	});
@@ -22,7 +22,7 @@ export const login = async ({
 export const register = async (
 	payload: RegisterPayload
 ): Promise<AuthResponse> => {
-	const response = await axiosInstance.post<AuthResponse>(auth.login, {
+	const response = await axiosInstance.post<AuthResponse>(endpoints.login, {
 		payload,
 	});
 
