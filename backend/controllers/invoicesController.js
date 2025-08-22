@@ -36,8 +36,8 @@ exports.createInvoice = async (req, res) => {
 
 	const invoiceData = { userId, ...req.body };
 
-	const newInvoice = await InvoiceService.createInvoice(invoiceData);
-	SuccessResponse.created(res, newInvoice, "Invoice created successfully.");
+	await InvoiceService.createInvoice(invoiceData);
+	SuccessResponse.created(res, null, "Invoice created successfully.");
 };
 
 exports.getUserInvoices = async (req, res) => {
@@ -93,12 +93,9 @@ exports.updateInvoice = async (req, res) => {
 		throw new BadRequestError("No valid fields provided for update.");
 	}
 
-	const updatedInvoice = await InvoiceService.updateInvoice(
-		invoiceId,
-		updateData
-	);
+	await InvoiceService.updateInvoice(invoiceId, updateData);
 
-	SuccessResponse.ok(res, updatedInvoice, "Invoice updated successfully.");
+	SuccessResponse.ok(res, null, "Invoice updated successfully.");
 };
 
 exports.markAsPaid = async (req, res) => {
@@ -107,7 +104,10 @@ exports.markAsPaid = async (req, res) => {
 
 	await InvoiceService.markAsPaid(invoiceId, status);
 
-	SuccessResponse.ok(res, null, "Invoice status updated to paid successfully.");
+	SuccessResponse.okMessage(
+		res,
+		"Invoice status updated to paid successfully."
+	);
 };
 
 exports.deleteInvoice = async (req, res) => {
@@ -115,5 +115,5 @@ exports.deleteInvoice = async (req, res) => {
 
 	await InvoiceService.deleteInvoice(invoiceId);
 	// Use noContent for successful deletion
-	SuccessResponse.noContent(res);
+	SuccessResponse.okMessage(res, "Invoice deleted successfully.");
 };

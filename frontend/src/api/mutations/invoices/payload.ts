@@ -11,6 +11,7 @@ export type InvoicePayload = {
 	clientCity: string;
 	clientPostCode: string;
 	clientCountry: string;
+	currency: "USD" | "EUR" | "GBP" | "NGN";
 	invoiceDate: string;
 	dueDate: string;
 	projectDescription: string;

@@ -20,6 +20,7 @@ export type InvoiceData = {
 	clientEmail: string;
 	billFrom: Address;
 	billTo: Address;
+	currency: "USD" | "EUR" | "GBP" | "NGN";
 	invoiceDate: string;
 	dueDate: string;
 	projectDescription: string;

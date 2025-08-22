@@ -1,20 +1,34 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-	LoginPayload,
-	RegisterPayload,
-	login,
-	register,
-	AuthResponse,
+	InvoicePayload,
+	PaidInvoicePayload,
+	createInvoice,
+	updateInvoice,
+	markAsPaid,
+	deleteInvoice,
 } from "@/api";
+import { RequestResponse } from "@/types";
 
-export const useLogin = () => {
-	return useMutation<AuthResponse, Error, LoginPayload>({
-		mutationFn: payload => login(payload),
+export const useCreateInvoice = () => {
+	return useMutation<RequestResponse, Error, InvoicePayload>({
+		mutationFn: payload => createInvoice(payload),
 	});
 };
 
-export const useRegister = () => {
-	return useMutation<AuthResponse, Error, RegisterPayload>({
-		mutationFn: payload => register(payload),
+export const useUpdateInvoice = (id: string) => {
+	return useMutation<RequestResponse, Error, InvoicePayload>({
+		mutationFn: payload => updateInvoice(id, payload),
+	});
+};
+
+export const useDeleteInvoice = (id: string) => {
+	return useMutation<RequestResponse, Error>({
+		mutationFn: () => deleteInvoice(id),
+	});
+};
+
+export const usePaidInvoice = (id: string) => {
+	return useMutation<RequestResponse, Error, PaidInvoicePayload>({
+		mutationFn: payload => markAsPaid(id, payload),
 	});
 };

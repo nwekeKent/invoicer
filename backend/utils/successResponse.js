@@ -30,13 +30,16 @@ class SuccessResponse {
 	}
 
 	/**
-	 * Sends a 204 No Content response.
-	 * Ideal for requests that are successfully processed but do not need to return any data,
-	 * such as a DELETE request.
+	 * Sends a 200 OK response with a success message.
+	 * Useful when you want to confirm an action like DELETE without returning data.
 	 * @param {object} res - The Express response object.
+	 * @param {string} message - A success message to return.
 	 */
-	static noContent(res) {
-		res.status(204).end();
+	static okMessage(res, message = "Success") {
+		res.status(200).json({
+			success: true,
+			message,
+		});
 	}
 }
 
