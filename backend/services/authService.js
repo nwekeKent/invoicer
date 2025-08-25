@@ -38,7 +38,7 @@ class AuthService {
 			if (error.code === "auth/invalid-credential") {
 				throw new UnauthorizedError("Invalid email or password.");
 			}
-			throw new BadRequestError(error.message || "Login failed.");
+			throw new BadRequestError(error.code || "Login failed.");
 		}
 	}
 
@@ -99,7 +99,7 @@ class AuthService {
 				throw new BadRequestError(error.message);
 			}
 
-			throw new BadRequestError(error.message || "Failed to register user.");
+			throw new BadRequestError(error.code || "Failed to register user.");
 		}
 	}
 
