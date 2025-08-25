@@ -41,3 +41,11 @@ exports.registerUser = async (req, res) => {
 	// Use SuccessResponse for the successful creation.
 	SuccessResponse.created(res, newUser, "User registered successfully");
 };
+
+exports.verifyToken = async (req, res) => {
+	const { token } = req.body;
+
+	await AuthService.verifyToken(token);
+
+	SuccessResponse.okMessage(res, "Token is valid");
+};

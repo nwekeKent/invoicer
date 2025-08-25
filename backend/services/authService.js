@@ -102,6 +102,21 @@ class AuthService {
 			throw new BadRequestError(error.message || "Failed to register user.");
 		}
 	}
+
+	/**
+	 * Verifies a Firebase ID token.
+	 * @param {string} token - The ID token to verify.
+	 * @returns {Promise<object>} - The decoded token if valid.
+	 * @throws {UnauthorizedError} If token is invalid or expired.
+	 */
+	static async verifyToken(token) {
+		try {
+			const decodedToken = await auth.verifyIdToken(token);
+			return decodedToken;
+		} catch (error) {
+			throw new UnauthorizedError("Invalid or expired token.");
+		}
+	}
 }
 
 module.exports = AuthService;
