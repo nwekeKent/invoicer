@@ -1,34 +1,24 @@
-// hooks/useModalManager.ts
-import { useState, useCallback } from "react";
+import { create } from "zustand";
 
 type ModalType = "new-invoice" | "edit-invoice" | "delete-invoice" | null;
 
-export function useModalManager() {
-	const [activeModal, setActiveModal] = useState<ModalType>(null);
-	const [selectedId, setSelectedId] = useState<string>();
-
-	const openModal = useCallback((modal: ModalType, id?: string) => {
-		setActiveModal(modal);
-		if (id) setSelectedId(id);
-	}, []);
-
-	const closeModal = useCallback(() => {
-		setActiveModal(null);
-		setSelectedId(undefined);
-	}, []);
-
-	const isModalOpen = useCallback(
-		(modal: ModalType) => {
-			return activeModal === modal;
-		},
-		[activeModal]
-	);
-
-	return {
-		activeModal,
-		selectedId,
-		openModal,
-		closeModal,
-		isModalOpen,
-	};
+interface ModalStore {
+	activeModal: ModalType;
+	selectedId?: string;
+	openModal: (modal: ModalType, id?: string) => void;
+	closeModal: () => void;
 }
+
+export const useModalManager = create<ModalStore>(set => ({
+	activeModal: null,
+	selectedId: undefined,
+
+	openModal: (modal, id) => {
+		console.log("Opening modal:", modal);
+		set({ activeModal: modal, selectedId: id });
+	},
+
+	closeModal: () => {
+		set({ activeModal: null, selectedId: undefined });
+	},
+}));

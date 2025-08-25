@@ -1,29 +1,31 @@
-// hooks/useInvoiceFilter.ts
-import { useSearchParams, useRouter } from "next/navigation";
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
 export function useInvoiceFilter() {
-	const searchParams = useSearchParams();
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const filter = searchParams.get("filter") || "All";
 
 	const setFilter = useCallback(
 		(newFilter: string) => {
-			// Convert to array first, then to URLSearchParams
-			const paramsArray = Array.from(searchParams.entries());
-			const params = new URLSearchParams(paramsArray);
+			const current = new URLSearchParams(window.location.search); // Use window.location
 
 			if (newFilter === "All") {
-				params.delete("filter");
+				current.delete("filter");
 			} else {
-				params.set("filter", newFilter);
+				current.set("filter", newFilter);
 			}
 
-			const newUrl = params.toString() ? `?${params.toString()}` : "";
+			// Construct new URL
+			const queryString = current.toString();
+			const newUrl = queryString ? `?${queryString}` : "/invoices";
+
 			router.replace(newUrl, { scroll: false });
 		},
-		[searchParams, router]
+		[router]
 	);
 
 	return { filter, setFilter };
