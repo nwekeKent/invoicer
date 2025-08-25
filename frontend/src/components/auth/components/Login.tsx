@@ -5,10 +5,8 @@ import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import Input from "@/components/shared/Input";
 import style from "../Auth.module.scss";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { Toast } from "@/components/shared/Toast";
 import Link from "next/link";
+import { useLogin } from "@/api";
 
 const FormSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid email").required("required"),
@@ -20,46 +18,11 @@ const initialValues = {
 	password: "",
 };
 
-const formatMsg = (str: string) => {
-	let newStr = "";
-
-	if (str) {
-		const formatStr = str.split("/");
-		newStr = formatStr[1]?.replace(/-/g, " ");
-	}
-
-	return newStr;
-};
-
 export const Login = () => {
-	const router = useRouter();
+	const { mutate: login, isPending: submitting } = useLogin();
 
-	const handleSubmit = async (
-		val: typeof initialValues,
-		{ setSubmitting }: any
-	) => {
-		setSubmitting(true);
-		try {
-			const response = await axios.post(
-				"https://invoicer-mhga.onrender.com/users/login",
-				val
-			);
-			localStorage.setItem("token", response.data.token);
-			localStorage.setItem("user", JSON.stringify(response.data.user));
-			Toast.fire({
-				icon: "success",
-				title: "Login Successful!",
-			});
-
-			router.push("/invoices");
-		} catch (err: any) {
-			Toast.fire({
-				icon: "error",
-				title: formatMsg(err.response.data.error.code),
-			});
-		} finally {
-			setSubmitting(false);
-		}
+	const handleSubmit = async (val: typeof initialValues) => {
+		login(val);
 	};
 
 	return (
@@ -74,7 +37,7 @@ export const Login = () => {
 				onSubmit={handleSubmit}
 				validationSchema={FormSchema}
 			>
-				{({ isSubmitting }) => (
+				{() => (
 					<Form>
 						<Field
 							placeholder="Email Address"
@@ -94,9 +57,9 @@ export const Login = () => {
 						<button
 							className="button__add-new-item"
 							type="submit"
-							disabled={isSubmitting}
+							disabled={submitting}
 						>
-							{isSubmitting ? "Signing in..." : "Sign In"}
+							{submitting ? "Signing in..." : "Sign In"}
 						</button>
 
 						<p className={style.auth__para}>

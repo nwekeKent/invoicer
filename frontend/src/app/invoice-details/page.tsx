@@ -6,17 +6,17 @@ import InvoiceDetails from "@/components/invoices/components/InvoiceDetails";
 import Modal from "@/components/shared/Modal";
 import React from "react";
 import { AnimatePresence } from "framer-motion";
-import { useInvoice } from "@/context/InvoiceContext";
+import { useModalManager } from "@/hooks";
 
 export default function Home() {
-	const { isEditInvoiceOpen, isDeleteModalOpen } = useInvoice();
+	const { activeModal } = useModalManager();
 
 	return (
 		<React.Fragment>
 			<InvoiceDetails />
-			{isEditInvoiceOpen && <InvoiceCrud />}
+			{activeModal === "edit-invoice" && <InvoiceCrud />}
 			<AnimatePresence>
-				{isDeleteModalOpen && (
+				{activeModal === "delete-invoice" && (
 					<Modal>
 						<DeleteInvoice />
 					</Modal>
