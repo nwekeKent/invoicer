@@ -1,55 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
-import axios from "axios";
-import { Toast } from "@/components/shared/Toast";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useInvoice } from "@/context/InvoiceContext";
+import { useSearchParams } from "next/navigation";
+import { useModalManager } from "@/hooks";
+import { useDeleteInvoice } from "@/api";
 
 const DeleteInvoice = () => {
-	const router = useRouter();
 	const idParams = useSearchParams();
 	const invoiceId = idParams.get("id");
-	const [submitting, setSubmitting] = useState(false);
-	const { setIsDeleteModalOpen, setCrudAction, crudAction } = useInvoice();
 
-	const handleCancel = () => setIsDeleteModalOpen(false);
+	const { closeModal } = useModalManager();
+	const { mutate: deleteInvoice, isPending: submitting } = useDeleteInvoice(
+		invoiceId!
+	);
+
 	const handleDelete = async () => {
-		const token = localStorage.getItem("token");
-		setSubmitting(true);
-		try {
-			const res = await axios.delete(
-				`https://invoicer-mhga.onrender.com/invoices/${invoiceId}/delete`,
-				{
-					headers: {
-						authorization: `Bearer ${token}`,
-					},
-				}
-			);
-
-			Toast.fire({
-				icon: "success",
-				title: res.data.message,
-			});
-			router.push("/invoices");
-			setCrudAction(!crudAction);
-			setIsDeleteModalOpen(false);
-		} catch (err: any) {
-			if (err.status === 401) {
-				Toast.fire({
-					icon: "error",
-					title: "Session Expired, Please Login",
-				});
-				router.push("/auth/login");
-			} else {
-				Toast.fire({
-					icon: "error",
-					title: err.response.data.error,
-				});
-			}
-		} finally {
-			setSubmitting(false);
-		}
+		deleteInvoice();
 	};
 
 	return (
@@ -61,7 +26,7 @@ const DeleteInvoice = () => {
 			</p>
 
 			<div className="delete__cta">
-				<button className="button__edit" onClick={handleCancel}>
+				<button className="button__edit" onClick={closeModal}>
 					Cancel
 				</button>
 				<button className="button__delete" onClick={handleDelete}>

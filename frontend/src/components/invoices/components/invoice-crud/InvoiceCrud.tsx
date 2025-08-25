@@ -10,19 +10,15 @@ import { Toast } from "@/components/shared/Toast";
 import InvoicePdf from "../InvoicePdf";
 import { pdf } from "@react-pdf/renderer";
 import { motion } from "framer-motion";
-import { useInvoice } from "@/context/InvoiceContext";
+import { useModalManager } from "@/hooks";
 
 interface User {
 	uid: string;
 }
 
 export const InvoiceCrud = () => {
-	const {
-		setIsNewInvoiceOpen,
-		setIsEditInvoiceOpen,
-		setCrudAction,
-		crudAction,
-	} = useInvoice();
+	const { openModal, closeModal } = useModalManager();
+
 	const pathname = usePathname();
 	const router = useRouter();
 	const idParams = useSearchParams();
@@ -33,8 +29,7 @@ export const InvoiceCrud = () => {
 	const editSubmitRef = useRef<(() => void) | null>(null);
 
 	const handleClose = () => {
-		setIsNewInvoiceOpen(false);
-		setIsEditInvoiceOpen(false);
+		closeModal();
 	};
 
 	const createInvoice = async (val: any) => {
@@ -67,8 +62,7 @@ export const InvoiceCrud = () => {
 			a.href = url;
 			a.download = `invoice ${res.data.data.id}.pdf`;
 			a.click();
-			setCrudAction(!crudAction);
-			setIsNewInvoiceOpen(false);
+			closeModal();
 		} catch (err: any) {
 			if (err.status === 401) {
 				Toast.fire({
@@ -117,8 +111,7 @@ export const InvoiceCrud = () => {
 			a.href = url;
 			a.download = `invoice ${invoiceId}.pdf`;
 			a.click();
-			setIsEditInvoiceOpen(false);
-			setCrudAction(!crudAction);
+			closeModal();
 		} catch (err: any) {
 			if (err.status === 401) {
 				Toast.fire({

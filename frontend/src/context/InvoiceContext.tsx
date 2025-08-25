@@ -1,56 +1,43 @@
+// context/InvoiceModalContext.tsx
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-interface InvoiceContextType {
-	invoices: any[];
-	setInvoices: (invoices: any[]) => void;
-	invoiceFilter: string;
-	setInvoiceFilter: (filter: string) => void;
-	isNewInvoiceOpen: boolean;
-	setIsNewInvoiceOpen: (isOpen: boolean) => void;
-	isEditInvoiceOpen: boolean;
-	setIsEditInvoiceOpen: (isOpen: boolean) => void;
-	isDeleteModalOpen: boolean;
-	setIsDeleteModalOpen: (isOpen: boolean) => void;
-	crudAction: boolean;
-	setCrudAction: (action: boolean) => void;
+type ModalType = "new" | "edit" | "delete" | null;
+
+interface ModalContextType {
+	activeModal: ModalType;
+	openModal: (modal: ModalType) => void;
+	closeModal: () => void;
+	selectedId?: string;
+	setSelectedId: (id?: string) => void;
 }
 
-const InvoiceContext = createContext<InvoiceContextType | undefined>(undefined);
+const InvoiceModalContext = createContext<ModalContextType | undefined>(
+	undefined
+);
 
-export function InvoiceProvider({ children }: { children: ReactNode }) {
-	const [invoices, setInvoices] = useState<any[]>([]);
-	const [invoiceFilter, setInvoiceFilter] = useState("All");
-	const [isNewInvoiceOpen, setIsNewInvoiceOpen] = useState(false);
-	const [isEditInvoiceOpen, setIsEditInvoiceOpen] = useState(false);
-	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-	const [crudAction, setCrudAction] = useState(false);
+export function InvoiceModalProvider({ children }: { children: ReactNode }) {
+	const [activeModal, setActiveModal] = useState<ModalType>(null);
+	const [selectedId, setSelectedId] = useState<string | undefined>();
 
-	const value = {
-		invoices,
-		setInvoices,
-		invoiceFilter,
-		setInvoiceFilter,
-		isNewInvoiceOpen,
-		setIsNewInvoiceOpen,
-		isEditInvoiceOpen,
-		setIsEditInvoiceOpen,
-		isDeleteModalOpen,
-		setIsDeleteModalOpen,
-		crudAction,
-		setCrudAction,
-	};
+	const openModal = (modal: ModalType) => setActiveModal(modal);
+	const closeModal = () => setActiveModal(null);
 
 	return (
-		<InvoiceContext.Provider value={value}>{children}</InvoiceContext.Provider>
+		<InvoiceModalContext.Provider
+			value={{ activeModal, openModal, closeModal, selectedId, setSelectedId }}
+		>
+			{children}
+		</InvoiceModalContext.Provider>
 	);
 }
 
-export function useInvoice() {
-	const context = useContext(InvoiceContext);
-	if (context === undefined) {
-		throw new Error("useInvoice must be used within an InvoiceProvider");
-	}
+export function useInvoiceModal() {
+	const context = useContext(InvoiceModalContext);
+	if (!context)
+		throw new Error(
+			"useInvoiceModal must be used within an InvoiceModalProvider"
+		);
 	return context;
 }

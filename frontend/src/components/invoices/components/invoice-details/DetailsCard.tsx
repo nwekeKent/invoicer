@@ -1,19 +1,10 @@
 import React from "react";
 import styles from "../../Invoices.module.scss";
 import Card from "@/components/shared/Card";
+import { InvoiceData } from "@/types";
+import { sumTotal } from "@/utils";
 
-interface InvoiceProps {
-	invoice: {
-		id?: string;
-		[key: string]: any;
-	};
-}
-
-const sumTotal = (items: { total: number }[]) => {
-	return items.reduce((acc, item) => acc + item.total, 0);
-};
-
-const DetailsCard = ({ invoice }: InvoiceProps) => {
+const DetailsCard = ({ invoice }: { invoice: InvoiceData }) => {
 	return (
 		<Card containerClass={styles.invoice__details__card}>
 			<div className={styles.details__card_top}>
@@ -22,7 +13,7 @@ const DetailsCard = ({ invoice }: InvoiceProps) => {
 						<span>#</span>
 						{invoice.id}
 					</p>
-					<p className="small-para-grey">{invoice.projectDescription}</p>
+					<p className="small-para-grey">{invoice?.projectDescription}</p>
 				</div>
 
 				<div className={styles.res__align}>
@@ -36,12 +27,12 @@ const DetailsCard = ({ invoice }: InvoiceProps) => {
 				<div className={styles.invoiceDate}>
 					<div>
 						<p className="small-para-grey">Invoice Date</p>
-						<h1 className="bold-black-text">{invoice.invoiceDate}</h1>
+						<h1 className="bold-black-text">{invoice?.invoiceDate}</h1>
 					</div>
 
 					<div>
 						<p className="small-para-grey">Payment Due</p>
-						<h1 className="bold-black-text ">{invoice.dueDate}</h1>
+						<h1 className="bold-black-text ">{invoice?.dueDate}</h1>
 					</div>
 				</div>
 
@@ -56,7 +47,7 @@ const DetailsCard = ({ invoice }: InvoiceProps) => {
 
 				<div>
 					<p className="small-para-grey">Sent To</p>
-					<h1 className="bold-black-text ">{invoice.clientEmail}</h1>
+					<h1 className="bold-black-text ">{invoice?.clientEmail}</h1>
 				</div>
 			</div>
 
@@ -103,7 +94,7 @@ const DetailsCard = ({ invoice }: InvoiceProps) => {
 
 				<div>
 					<small>Amount Due</small>
-					<h3>${sumTotal(invoice.itemList)}</h3>
+					<h3>${sumTotal(invoice?.itemList)}</h3>
 				</div>
 			</div>
 		</Card>

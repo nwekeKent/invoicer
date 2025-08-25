@@ -7,39 +7,26 @@ import styles from "../Invoices.module.scss";
 import { StatusPill } from "@/components/shared/StatusPill";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useInvoice } from "@/context/InvoiceContext";
-
-interface ItemList {
-	price: number;
-	total: number;
-}
-
-interface Item {
-	status: "Pending" | "Paid";
-	id: string;
-	dueDate: string;
-	itemList: ItemList[];
-	clientName: string;
-}
-
-const sumTotal = (items: { total: number }[]) => {
-	return items.reduce((acc, item) => acc + item.total, 0);
-};
+import { useInvoices } from "@/api";
+import { InvoiceData } from "@/types";
+import { useInvoiceFilter } from "@/hooks";
+import { sumTotal } from "@/utils";
 
 const InvoicesList = () => {
-	const { invoices, invoiceFilter } = useInvoice();
+	const { data: invoices } = useInvoices();
+	const { filter } = useInvoiceFilter();
 
-	function filterByStatus(arr: Item[]) {
-		if (invoiceFilter === "All") {
+	function filterByStatus(arr: InvoiceData[]) {
+		if (filter === "All") {
 			return arr;
 		}
-		return arr.filter(item => item.status === invoiceFilter);
+		return arr.filter(item => item.status === filter);
 	}
 
 	const router = useRouter();
 	return (
 		<div className={styles.invoices__list}>
-			{filterByStatus(invoices).map(invoice => {
+			{filterByStatus(invoices!).map(invoice => {
 				const { id, clientName, dueDate, status, itemList } = invoice;
 				return (
 					<Card

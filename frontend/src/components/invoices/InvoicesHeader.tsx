@@ -5,15 +5,14 @@ import styles from "./Invoices.module.scss";
 import Image from "next/image";
 import InvoiceFilter from "./components/InvoiceFilter";
 import { useMediaQuery } from "react-responsive";
-import { useInvoice } from "@/context/InvoiceContext";
+import { useModalManager } from "@/hooks";
 
 interface Props {
 	invoiceLength: number;
 }
 
 const InvoicesHeader = ({ invoiceLength }: Props) => {
-	const { setIsNewInvoiceOpen } = useInvoice();
-
+	const { openModal } = useModalManager();
 	const isMobile = useMediaQuery({
 		query: "(max-width: 650px)",
 	});
@@ -34,7 +33,10 @@ const InvoicesHeader = ({ invoiceLength }: Props) => {
 				<button
 					className="button__add-new"
 					type="button"
-					onClick={() => setIsNewInvoiceOpen(true)}
+					onClick={() => {
+						openModal("new-invoice");
+						console.log("clicked");
+					}}
 				>
 					<Image
 						src={"/assets/svg/invoices/plus-sign.svg"}

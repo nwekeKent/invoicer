@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Checkbox from "@/components/shared/Checkbox";
 import styles from "../Invoices.module.scss";
-import { useInvoice } from "@/context/InvoiceContext";
 import { useMediaQuery } from "react-responsive";
+import { useInvoiceFilter } from "@/hooks";
 
 const InvoiceFilter = () => {
-	const { setInvoiceFilter, invoiceFilter } = useInvoice();
+	const { filter, setFilter } = useInvoiceFilter();
 	const [filterActive, setFilterActive] = useState(false);
+	const dropdownRef = useRef<HTMLDivElement>(null); // for detecting outside click
 
 	const isMobile = useMediaQuery({
 		query: "(max-width: 650px)",
@@ -18,10 +19,27 @@ const InvoiceFilter = () => {
 	const handleToggle = () => {
 		setFilterActive(prev => !prev);
 	};
+
+	// Close dropdown when clicking outside
+	useEffect(() => {
+		function handleClickOutside(event: MouseEvent) {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target as Node)
+			) {
+				setFilterActive(false);
+			}
+		}
+
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
+
 	return (
-		<div className={styles.invoices__filter}>
+		<div className={styles.invoices__filter} ref={dropdownRef}>
 			<div className={styles.filter__text} onClick={handleToggle}>
-				{" "}
 				{isMobile ? "Filter" : "Filter by status"}
 				<span>
 					<Image
@@ -38,18 +56,18 @@ const InvoiceFilter = () => {
 				<div className={styles.filter__div}>
 					<Checkbox
 						label="All"
-						handleChange={() => setInvoiceFilter("All")}
-						checked={invoiceFilter === "All"}
+						handleChange={() => setFilter("All")}
+						checked={filter === "All"}
 					/>
 					<Checkbox
 						label="Pending"
-						handleChange={() => setInvoiceFilter("Pending")}
-						checked={invoiceFilter === "Pending"}
+						handleChange={() => setFilter("Pending")}
+						checked={filter === "Pending"}
 					/>
 					<Checkbox
 						label="Paid"
-						handleChange={() => setInvoiceFilter("Paid")}
-						checked={invoiceFilter === "Paid"}
+						handleChange={() => setFilter("Paid")}
+						checked={filter === "Paid"}
 					/>
 				</div>
 			)}

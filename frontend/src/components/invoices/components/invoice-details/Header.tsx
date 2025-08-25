@@ -6,23 +6,29 @@ import { StatusPill } from "@/components/shared/StatusPill";
 import Image from "next/image";
 import Card from "@/components/shared/Card";
 import { useRouter } from "next/navigation";
+import { useModalManager } from "@/hooks";
+import { usePaidInvoice, PaidInvoicePayload } from "@/api";
 
 interface HeaderProps {
 	invoiceStatus?: "Pending" | "Paid";
-	setEditInvoice: (isOpen: boolean) => void;
-	setDeleteInvoice: (isOpen: boolean) => void;
-	submitting: boolean;
-	markAsPaid: () => void;
+	invoiceId: string | null;
 }
 
-const Header = ({
-	invoiceStatus,
-	setEditInvoice,
-	setDeleteInvoice,
-	submitting,
-	markAsPaid,
-}: HeaderProps) => {
+const Header = ({ invoiceStatus, invoiceId }: HeaderProps) => {
+	const { mutate: markAsPaid, isPending: submitting } = usePaidInvoice(
+		invoiceId!
+	);
 	const router = useRouter();
+	const { openModal } = useModalManager();
+
+	const handleMarkAsPaid = () => {
+		const data = {
+			status: "Paid",
+		} as PaidInvoicePayload;
+
+		markAsPaid(data); // The hook handles toast and invalidation
+	};
+
 	return (
 		<div>
 			{" "}
@@ -41,17 +47,20 @@ const Header = ({
 					<StatusPill status={invoiceStatus} />
 				</div>
 				<div className={styles.actions__card__right}>
-					<button className="button__edit" onClick={() => setEditInvoice(true)}>
+					<button
+						className="button__edit"
+						onClick={() => openModal("edit-invoice")}
+					>
 						Edit
 					</button>
 					<button
 						className="button__delete"
-						onClick={() => setDeleteInvoice(true)}
+						onClick={() => openModal("delete-invoice")}
 					>
 						Delete
 					</button>
 					{invoiceStatus !== "Paid" && (
-						<button className="button__primary" onClick={markAsPaid}>
+						<button className="button__primary" onClick={handleMarkAsPaid}>
 							{submitting ? "Updating" : "Mark as Paid"}
 						</button>
 					)}
