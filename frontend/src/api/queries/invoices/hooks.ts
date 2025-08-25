@@ -7,7 +7,7 @@ export const useInvoices = () => {
 	return useQuery({
 		queryKey: [invoiceQueryKeys.GET_INVOICES],
 		queryFn: getInvoices,
-		select: response => response.data.invoices,
+		select: response => response.data,
 	});
 };
 
@@ -19,6 +19,6 @@ export const useInvoice = (
 		queryFn: () => getInvoice(id!),
 		// The `enabled` option prevents the query from running if `id` is null or undefined
 		enabled: !!id,
-		select: response => response.data.invoice,
+		select: response => response.data,
 	});
 };
