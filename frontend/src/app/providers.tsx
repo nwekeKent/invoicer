@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import { ThemeProvider } from "next-themes";
+import { QueryProvider } from "@/providers/react-query-provider";
 
 type ProvidersProps = {
 	children: ReactNode;
@@ -9,7 +10,7 @@ type ProvidersProps = {
 
 const Providers = ({ children }: ProvidersProps) => (
 	<ThemeProvider enableSystem={false} enableColorScheme={false}>
-		{children}
+		<QueryProvider>{children}</QueryProvider>
 	</ThemeProvider>
 );
 
