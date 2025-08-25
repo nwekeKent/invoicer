@@ -15,7 +15,7 @@ export type InvoiceItem = {
 export type InvoiceData = {
 	id: string;
 	userId: string;
-	status: "paid" | "pending";
+	status: "Paid" | "Pending";
 	clientName: string;
 	clientEmail: string;
 	billFrom: Address;
