@@ -26,7 +26,7 @@ const Header = ({ invoiceStatus, invoiceId }: HeaderProps) => {
 			status: "Paid",
 		} as PaidInvoicePayload;
 
-		markAsPaid(data); // The hook handles toast and invalidation
+		markAsPaid(data);
 	};
 
 	return (

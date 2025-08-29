@@ -11,7 +11,7 @@ const DetailsCard = ({ invoice }: { invoice: InvoiceData }) => {
 				<div>
 					<p className="bold-black-text">
 						<span>#</span>
-						{invoice.id}
+						{invoice?.id}
 					</p>
 					<p className="small-para-grey">{invoice?.projectDescription}</p>
 				</div>
@@ -38,7 +38,7 @@ const DetailsCard = ({ invoice }: { invoice: InvoiceData }) => {
 
 				<div className={styles.billTo}>
 					<p className="small-para-grey">Bill To</p>
-					<h1 className="bold-black-text ">{invoice.clientName}</h1>
+					<h1 className="bold-black-text ">{invoice?.clientName}</h1>
 					<p className="small-para-grey">{invoice?.billTo?.streetAddress}</p>
 					<p className="small-para-grey">{invoice?.billTo?.city}</p>
 					<p className="small-para-grey">{invoice?.billTo?.postCode}</p>
@@ -63,7 +63,7 @@ const DetailsCard = ({ invoice }: { invoice: InvoiceData }) => {
 						</div>
 					</div>
 
-					{invoice.itemList.map((item: any, index: number) => {
+					{invoice?.itemList.map((item: any, index: number) => {
 						return (
 							<React.Fragment key={index}>
 								<div className={styles.breakdown__list}>
@@ -94,7 +94,7 @@ const DetailsCard = ({ invoice }: { invoice: InvoiceData }) => {
 
 				<div>
 					<small>Amount Due</small>
-					<h3>${sumTotal(invoice?.itemList)}</h3>
+					{/* <h3>${sumTotal(invoice?.itemList)}</h3> */}
 				</div>
 			</div>
 		</Card>
