@@ -11,9 +11,12 @@ import { RequestResponse } from "@/types";
 import { Toast } from "@/components/shared/Toast";
 import { invoiceQueryKeys } from "@/api";
 import { useRouter } from "next/router";
+import { pdfDownload } from "@/utils/pdf-download";
+import { useModalManager } from "@/hooks";
 
 export const useCreateInvoice = () => {
 	const queryClient = useQueryClient();
+	const { closeModal } = useModalManager();
 	return useMutation<RequestResponse, Error, InvoicePayload>({
 		mutationFn: payload => createInvoice(payload),
 		onSuccess: response => {
@@ -24,6 +27,7 @@ export const useCreateInvoice = () => {
 				icon: "success",
 				title: response.message || "Invoice created successfully!",
 			});
+			pdfDownload(response.data, closeModal);
 		},
 		onError: (error: Error) => {
 			Toast.fire({
@@ -36,6 +40,7 @@ export const useCreateInvoice = () => {
 
 export const useUpdateInvoice = (id: string) => {
 	const queryClient = useQueryClient();
+	const { closeModal } = useModalManager();
 	return useMutation<RequestResponse, Error, InvoicePayload>({
 		mutationFn: payload => updateInvoice(id, payload),
 		onSuccess: response => {
@@ -46,6 +51,7 @@ export const useUpdateInvoice = (id: string) => {
 				icon: "success",
 				title: response.message || "Invoice updated successfully!",
 			});
+			pdfDownload(response.data, closeModal);
 		},
 		onError: (error: Error) => {
 			Toast.fire({
