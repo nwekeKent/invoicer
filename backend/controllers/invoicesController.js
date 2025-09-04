@@ -36,8 +36,8 @@ exports.createInvoice = async (req, res) => {
 
 	const invoiceData = { userId, ...req.body };
 
-	await InvoiceService.createInvoice(invoiceData);
-	SuccessResponse.created(res, null, "Invoice created successfully.");
+	const createdInvoice = await InvoiceService.createInvoice(invoiceData);
+	SuccessResponse.created(res, createdInvoice, "Invoice created successfully.");
 };
 
 exports.getUserInvoices = async (req, res) => {
@@ -93,9 +93,12 @@ exports.updateInvoice = async (req, res) => {
 		throw new BadRequestError("No valid fields provided for update.");
 	}
 
-	await InvoiceService.updateInvoice(invoiceId, updateData);
+	const updatedInvoice = await InvoiceService.updateInvoice(
+		invoiceId,
+		updateData
+	);
 
-	SuccessResponse.ok(res, null, "Invoice updated successfully.");
+	SuccessResponse.ok(res, updatedInvoice, "Invoice updated successfully.");
 };
 
 exports.markAsPaid = async (req, res) => {
