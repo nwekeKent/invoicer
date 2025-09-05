@@ -94,7 +94,7 @@ const DetailsCard = ({ invoice }: { invoice: InvoiceData }) => {
 
 				<div>
 					<small>Amount Due</small>
-					{/* <h3>${sumTotal(invoice?.itemList)}</h3> */}
+					<h3>${sumTotal(invoice?.itemList)}</h3>
 				</div>
 			</div>
 		</Card>

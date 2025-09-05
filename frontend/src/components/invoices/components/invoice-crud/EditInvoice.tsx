@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useRef } from "react";
 import styles from "../../Invoices.module.scss";
 import * as Yup from "yup";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, Field, FieldArray, FormikProps } from "formik";
 import Input from "@/components/shared/Input";
 import Image from "next/image";
-import axios from "axios";
-import { Toast } from "@/components/shared/Toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useInvoice, InvoicePayload } from "@/api";
 
 const FormSchema = Yup.object().shape({
 	streetAddress: Yup.string().required("required"),
@@ -35,77 +34,41 @@ const FormSchema = Yup.object().shape({
 		.min(1, "At least one item is required"),
 });
 
-interface InvoiceProps {
-	id?: string;
-	[key: string]: any;
-}
-
 type ChildFormProps = {
-	editInvoice: (values: any) => void; // onSubmit function passed from the parent
+	editInvoice: (values: InvoicePayload) => void; // onSubmit function passed from the parent
 	editSubmitRef: React.MutableRefObject<(() => void) | null>; // Ref to expose submitForm method to parent
 };
 
 const EditInvoice = ({ editInvoice, editSubmitRef }: ChildFormProps) => {
-	const [invoice, setInvoice] = useState<InvoiceProps>({});
-	const [isFetching, setisFetching] = useState(true);
-	const router = useRouter();
 	const idParams = useSearchParams();
 	const id = idParams.get("id");
+	const { data: invoice, isLoading: fetching } = useInvoice(id!);
 
-	const initialValues = {
-		streetAddress: invoice.billFrom?.streetAddress,
-		city: invoice.billFrom?.city,
-		postCode: invoice.billFrom?.postCode,
-		country: invoice.billFrom?.country,
-		clientName: invoice?.clientName,
-		clientEmail: invoice?.clientEmail,
-		clientStreetAddress: invoice?.billTo?.streetAddress,
-		clientCity: invoice.billTo?.city,
-		clientPostCode: invoice.billTo?.postCode,
-		clientCountry: invoice.billTo?.country,
-		invoiceDate: invoice?.invoiceDate,
-		dueDate: invoice?.dueDate,
-		projectDescription: invoice?.projectDescription,
-		itemList: invoice?.itemList,
+	const formikRef = useRef<FormikProps<InvoicePayload>>(null);
+	editSubmitRef.current = () => {
+		if (formikRef.current) {
+			formikRef.current.submitForm();
+		}
 	};
 
-	useEffect(() => {
-		const fetchInvoice = async () => {
-			const token = localStorage.getItem("token");
+	const initialValues: InvoicePayload = {
+		streetAddress: invoice?.billFrom?.streetAddress || "",
+		city: invoice?.billFrom?.city || "",
+		postCode: invoice?.billFrom?.postCode || "",
+		country: invoice?.billFrom?.country || "",
+		clientName: invoice?.clientName || "",
+		clientEmail: invoice?.clientEmail || "",
+		clientStreetAddress: invoice?.billTo?.streetAddress || "",
+		clientCity: invoice?.billTo?.city || "",
+		clientPostCode: invoice?.billTo?.postCode || "",
+		clientCountry: invoice?.billTo?.country || "",
+		invoiceDate: invoice?.invoiceDate || "",
+		dueDate: invoice?.dueDate || "",
+		projectDescription: invoice?.projectDescription || "",
+		itemList: invoice?.itemList || [],
+	};
 
-			try {
-				const response = await axios.get(
-					`https://invoicer-mhga.onrender.com/invoices/${id}`,
-					{
-						headers: {
-							authorization: `Bearer ${token}`,
-						},
-					}
-				);
-				setInvoice(response.data.data);
-				setisFetching(false);
-			} catch (err: any) {
-				if (err.status === 401) {
-					Toast.fire({
-						icon: "error",
-						title: "Session Expired, Please Login",
-					});
-					router.push("/auth/login");
-				} else if (err.status === 404) {
-					setInvoice({});
-					setisFetching(false);
-				} else {
-					Toast.fire({
-						icon: "error",
-						title: err.response.data.error,
-					});
-				}
-			}
-		};
-		fetchInvoice();
-	}, [id, router]);
-
-	if (isFetching)
+	if (fetching)
 		return (
 			<div className="invoice-loader">
 				<Image
@@ -121,15 +84,16 @@ const EditInvoice = ({ editInvoice, editSubmitRef }: ChildFormProps) => {
 		<div className={styles.crud__div}>
 			<h1 className={styles.crudTitle}>Edit Invoice</h1>
 			<Formik
+				innerRef={formikRef}
 				initialValues={initialValues}
 				onSubmit={values => {
+					console.log("newValues", values);
 					editInvoice(values);
 				}}
 				validationSchema={FormSchema}
 				enableReinitialize
 			>
-				{({ values, submitForm }) => {
-					editSubmitRef.current = submitForm;
+				{({ values }) => {
 					return (
 						<Form>
 							<h3 className={styles.section__title}>Bill From</h3>
@@ -305,7 +269,7 @@ const EditInvoice = ({ editInvoice, editSubmitRef }: ChildFormProps) => {
 											className="button__add-new-item"
 											type="button"
 											onClick={() =>
-												push({ name: "", quantity: "", price: "" })
+												push({ itemName: "", quantity: "", price: "" })
 											}
 										>
 											+ Add New Item

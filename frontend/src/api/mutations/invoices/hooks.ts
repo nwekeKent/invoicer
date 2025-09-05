@@ -10,7 +10,7 @@ import {
 import { RequestResponse } from "@/types";
 import { Toast } from "@/components/shared/Toast";
 import { invoiceQueryKeys } from "@/api";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { pdfDownload } from "@/utils/pdf-download";
 import { useModalManager } from "@/hooks";
 
@@ -65,6 +65,7 @@ export const useUpdateInvoice = (id: string) => {
 export const useDeleteInvoice = (id: string) => {
 	const queryClient = useQueryClient();
 	const router = useRouter();
+	const { closeModal } = useModalManager();
 	return useMutation<RequestResponse, Error>({
 		mutationFn: () => deleteInvoice(id),
 		onSuccess: response => {
@@ -75,6 +76,7 @@ export const useDeleteInvoice = (id: string) => {
 				icon: "success",
 				title: response.message || "Invoice deleted successfully!",
 			});
+			closeModal();
 			router.push("/invoices");
 		},
 		onError: (error: Error) => {
@@ -88,6 +90,7 @@ export const useDeleteInvoice = (id: string) => {
 
 export const usePaidInvoice = (id: string) => {
 	const queryClient = useQueryClient();
+	const { closeModal } = useModalManager();
 	return useMutation<RequestResponse, Error, PaidInvoicePayload>({
 		mutationFn: payload => markAsPaid(id, payload),
 		onSuccess: response => {
@@ -96,13 +99,14 @@ export const usePaidInvoice = (id: string) => {
 			});
 			Toast.fire({
 				icon: "success",
-				title: response.message || "Invoice created successfully!",
+				title: response.message || "Invoice status updated successfully!",
 			});
+			closeModal();
 		},
 		onError: (error: Error) => {
 			Toast.fire({
 				icon: "error",
-				title: error.message || "Failed to create Invoice!",
+				title: error.message || "Failed to mark as invoice as paid!",
 			});
 		},
 	});

@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
 
 const PUBLIC_ENDPOINTS = ["/auth/login", "/auth/signup"];
 
-// Request interceptor (no changes needed here)
+// Request interceptor
 axiosInstance.interceptors.request.use(
 	config => {
 		const isPublic = PUBLIC_ENDPOINTS.some(path => config.url?.includes(path));
@@ -39,7 +39,13 @@ axiosInstance.interceptors.response.use(
 		// Check if it's a 401 Unauthorized error
 		if (error.response?.status === 401) {
 			if (typeof window !== "undefined") {
-				localStorage.removeItem("token");
+				import("@/components/shared/Toast").then(({ Toast }) => {
+					Toast.fire({
+						icon: "error",
+						title: "Session expired. Please log in again.",
+					});
+				});
+				window.location.href = "/auth/login";
 			}
 
 			error.isAuthError = true;

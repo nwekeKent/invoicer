@@ -17,7 +17,7 @@ export const updateInvoice = async (
 	id: string,
 	payload: InvoicePayload
 ): Promise<RequestResponse> => {
-	const response = await axiosInstance.put<RequestResponse>(
+	const response = await axiosInstance.patch<RequestResponse>(
 		endpoints.updateInvoice(id),
 		payload
 	);
