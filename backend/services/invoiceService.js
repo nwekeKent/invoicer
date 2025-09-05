@@ -1,8 +1,6 @@
-// services/invoiceService.js
-
-const { db } = require("../database/database"); // Assuming db is exported from here
-const Invoice = require("../models/invoice"); // Your Invoice model
-const { NotFoundError, BadRequestError } = require("../utils/apiErrors"); // Custom errors
+const { db } = require("../database/database");
+const Invoice = require("../models/invoice");
+const { NotFoundError, BadRequestError } = require("../utils/apiErrors");
 
 class InvoiceService {
 	/**
@@ -11,25 +9,8 @@ class InvoiceService {
 	 * @returns {Promise<Invoice>} - The created Invoice object.
 	 */
 	static async createInvoice(invoiceData) {
-		const {
-			userId,
-			streetAddress,
-			city,
-			postCode,
-			country,
-			clientName,
-			clientEmail,
-			clientStreetAddress,
-			clientCity,
-			clientPostCode,
-			clientCountry,
-			invoiceDate,
-			dueDate,
-			projectDescription,
-			itemList,
-		} = invoiceData;
+		const { userId, itemList } = invoiceData;
 
-		// Minimal validation here, more thorough validation can happen in controller or dedicated validator
 		if (!userId) {
 			throw new BadRequestError("User ID is required for invoice creation.");
 		}
@@ -37,34 +18,16 @@ class InvoiceService {
 			throw new BadRequestError("Invoice must contain at least one item.");
 		}
 
-		// It's good practice to create a unique ID outside the model, or let Firestore generate it.
-		// If your Invoice model already generates an ID, that's fine.
-		// If not, you might want to use something like crypto.randomUUID()
-		const newInvoice = new Invoice(
-			userId,
-			streetAddress,
-			city,
-			postCode,
-			country,
-			clientName,
-			clientEmail,
-			clientStreetAddress,
-			clientCity,
-			clientPostCode,
-			clientCountry,
-			invoiceDate,
-			dueDate,
-			projectDescription,
-			"Pending", // Default status
-			itemList
-		);
+		const newInvoice = new Invoice({
+			...invoiceData,
+			status: "Pending",
+		});
 
 		const invoiceObj = newInvoice.toFirestore();
 
-		// Use the service's db instance and handle potential Firestore errors
 		await db.collection("invoices").doc(newInvoice.id).set(invoiceObj);
 
-		return newInvoice; // Return the created Invoice object
+		return newInvoice;
 	}
 
 	/**
@@ -124,55 +87,47 @@ class InvoiceService {
 			throw new BadRequestError("Invoice ID is required for update.");
 		}
 
-		const userRef = db.collection("invoices").doc(invoiceId);
-		const doc = await userRef.get();
+		const invoiceRef = db.collection("invoices").doc(invoiceId);
+		const doc = await invoiceRef.get();
 
 		if (!doc.exists) {
 			throw new NotFoundError("Invoice not found.");
 		}
 
-		// Prepare update data, ensuring only valid fields are passed.
-		// This is a crucial step for security to prevent unintended updates.
-		const allowedUpdates = {};
-		// Add checks for each field if necessary, or rely on the Invoice model's structure.
-		if (updateData.streetAddress !== undefined)
-			allowedUpdates.streetAddress = updateData.streetAddress;
-		if (updateData.city !== undefined) allowedUpdates.city = updateData.city;
-		if (updateData.postCode !== undefined)
-			allowedUpdates.postCode = updateData.postCode;
-		if (updateData.country !== undefined)
-			allowedUpdates.country = updateData.country;
-		if (updateData.clientName !== undefined)
-			allowedUpdates.clientName = updateData.clientName;
-		if (updateData.clientEmail !== undefined)
-			allowedUpdates.clientEmail = updateData.clientEmail;
-		if (updateData.clientStreetAddress !== undefined)
-			allowedUpdates.clientStreetAddress = updateData.clientStreetAddress;
-		if (updateData.clientCity !== undefined)
-			allowedUpdates.clientCity = updateData.clientCity;
-		if (updateData.clientPostCode !== undefined)
-			allowedUpdates.clientPostCode = updateData.clientPostCode;
-		if (updateData.clientCountry !== undefined)
-			allowedUpdates.clientCountry = updateData.clientCountry;
-		if (updateData.invoiceDate !== undefined)
-			allowedUpdates.invoiceDate = updateData.invoiceDate;
-		if (updateData.dueDate !== undefined)
-			allowedUpdates.dueDate = updateData.dueDate;
-		if (updateData.projectDescription !== undefined)
-			allowedUpdates.projectDescription = updateData.projectDescription;
-		if (updateData.itemList !== undefined)
-			allowedUpdates.itemList = updateData.itemList;
-		// Note: You might want to control whether 'status' can be updated here or via a separate endpoint.
+		const allowedFields = [
+			"streetAddress",
+			"city",
+			"postCode",
+			"country",
+			"clientName",
+			"clientEmail",
+			"clientStreetAddress",
+			"clientCity",
+			"clientPostCode",
+			"clientCountry",
+			"invoiceDate",
+			"dueDate",
+			"projectDescription",
+			"itemList",
+		];
 
-		if (Object.keys(allowedUpdates).length === 0) {
+		const hasValidUpdate = Object.keys(updateData).some(field =>
+			allowedFields.includes(field)
+		);
+
+		if (!hasValidUpdate) {
 			throw new BadRequestError("No valid fields provided for update.");
 		}
 
-		await userRef.update(allowedUpdates);
+		const updatedInvoice = new Invoice({
+			...updateData,
+			status: "Pending",
+		});
+		await invoiceRef.update(updatedInvoice.toFirestore());
 
 		// Fetch and return the updated invoice
-		const updatedUserDoc = await userRef.get();
-		return Invoice.fromFirestore(updatedUserDoc);
+		const updatedInvoiceDoc = await invoiceRef.get();
+		return Invoice.fromFirestore(updatedInvoiceDoc);
 	}
 
 	/**
@@ -198,7 +153,6 @@ class InvoiceService {
 		}
 
 		await invoiceRef.update({ status: status });
-		// You might want to fetch and return the updated invoice here too
 	}
 
 	/**

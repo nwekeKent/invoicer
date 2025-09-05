@@ -29,7 +29,7 @@ class Item {
 }
 
 class Invoice {
-	constructor(
+	constructor({
 		userId,
 		streetAddress,
 		city,
@@ -46,8 +46,8 @@ class Invoice {
 		projectDescription,
 		status,
 		itemList,
-		id
-	) {
+		id,
+	}) {
 		this.id = id ? id : generatecustomId();
 		this.userId = userId;
 		this.streetAddress = streetAddress;

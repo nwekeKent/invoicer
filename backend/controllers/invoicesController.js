@@ -59,44 +59,17 @@ exports.getInvoiceById = async (req, res) => {
 };
 
 exports.updateInvoice = async (req, res) => {
-	const invoiceId = req.params.id; // Assuming invoice ID is in params
-	// Optionally, you might want to verify that the logged-in user owns this invoice,
-	// which would involve fetching the invoice and checking req.auth.uid against invoice.userId.
+	const invoiceId = req.params.id;
+	const userId = req.auth.uid;
 
-	// Controller validation for incoming update data (similar to createInvoice)
-	const allowedUpdates = [
-		"streetAddress",
-		"city",
-		"postCode",
-		"country",
-		"clientName",
-		"clientEmail",
-		"clientStreetAddress",
-		"clientCity",
-		"clientPostCode",
-		"clientCountry",
-		"invoiceDate",
-		"dueDate",
-		"projectDescription",
-		"itemList",
-	];
-	const updateData = {};
-	let hasValidUpdate = false;
-	for (const field of allowedUpdates) {
-		if (req.body[field] !== undefined) {
-			updateData[field] = req.body[field];
-			hasValidUpdate = true;
-		}
+	if (!invoiceId) {
+		throw new BadRequestError("Invoice ID is required.");
 	}
 
-	if (!hasValidUpdate) {
-		throw new BadRequestError("No valid fields provided for update.");
-	}
-
-	const updatedInvoice = await InvoiceService.updateInvoice(
-		invoiceId,
-		updateData
-	);
+	const updatedInvoice = await InvoiceService.updateInvoice(invoiceId, {
+		...req.body,
+		userId,
+	});
 
 	SuccessResponse.ok(res, updatedInvoice, "Invoice updated successfully.");
 };
@@ -117,6 +90,5 @@ exports.deleteInvoice = async (req, res) => {
 	const invoiceId = req.params.id;
 
 	await InvoiceService.deleteInvoice(invoiceId);
-	// Use noContent for successful deletion
 	SuccessResponse.okMessage(res, "Invoice deleted successfully.");
 };

@@ -25,7 +25,7 @@ router.get(
 );
 
 // edit single invoice
-router.put(
+router.patch(
 	"/invoices/:id",
 	verifyTokenMiddleware,
 	invoicesController.updateInvoice
