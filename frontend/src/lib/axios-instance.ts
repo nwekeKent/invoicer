@@ -35,16 +35,16 @@ axiosInstance.interceptors.request.use(
 // Response interceptor
 axiosInstance.interceptors.response.use(
 	response => response,
-	(error: AuthAxiosError) => {
+	async (error: AuthAxiosError) => {
 		// Check if it's a 401 Unauthorized error
+		const { Toast } = await import("@/components/shared/Toast");
 		if (error.response?.status === 401) {
 			if (typeof window !== "undefined") {
-				import("@/components/shared/Toast").then(({ Toast }) => {
-					Toast.fire({
-						icon: "error",
-						title: "Session expired. Please log in again.",
-					});
+				await Toast.fire({
+					icon: "error",
+					title: "Session expired. Please log in again.",
 				});
+
 				window.location.href = "/auth/login";
 			}
 

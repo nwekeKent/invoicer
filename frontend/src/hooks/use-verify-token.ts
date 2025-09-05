@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { Toast } from "@/components/shared/Toast";
 
 export function useVerifyTokenRedirect() {
 	const router = useRouter();
